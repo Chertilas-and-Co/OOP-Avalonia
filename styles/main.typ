@@ -33,7 +33,25 @@ XAML стиля имеет две части: атрибут селектора 
 
 ```
 
+Также в файле можно определять стили для элементов, при этом не применяя их ко всем элементам управления данного типа.
+
+Например, в App.axaml определен следующий стиль:
+
+```axaml
+<Style Selector="Button.login"/>
+```
+
+А в MainWindow.axaml созданы две кнопки. Стиль задается за счет указания свойства "Classes".
+
+```axaml
+<Button Name="button1" Classes="login"/>
+<Button Name="button2"/>
+```
+
+Стиль будет применен только к кнопке с наименованием "button1".
+
 3. Через ресурсы ResourceDictionary
+
 
 == Стили для окон приложения (Window)
 
@@ -43,6 +61,11 @@ XAML стиля имеет две части: атрибут селектора 
 <Style Selector="Window">
     <Setter Property="Background" Value="#5E4BD8"/>
     <Setter Property="Foreground" Value="White"/>
+    <Setter Property="WindowStartupLocation" Value="CenterScreen"/>
+    <Setter Property="Opacity" Value="0.8"/>
+    <Setter Property="CanResize" Value="False"/>
+    <Setter Property="CanMinimize" Value="False"/>
+    <Setter Property="CanMaximize" Value="True"/>
 </Style>
 ```
 
@@ -51,17 +74,60 @@ XAML стиля имеет две части: атрибут селектора 
 
 Свойства:
 
-- Background - свойство, отвечающее за фоновый цвет окна. Его можно задать, указав цвет:
+- Background --- свойство, отвечающее за фоновый цвет окна. Его можно задать, указав цвет:
   - с помощью наименования ("White", "Red")
   - в шестнадцатеричной форме ("\#5E4BD8")
   - через rgb ("rgb(188, 184, 218)")
-- Foreground - свойство, отвечающее за цвет текста. Оно задается аналогично свойству Background.
-
-
-
-
+- Foreground --- свойство, отвечающее за цвет текста. Оно задается аналогично свойству Background.
+- Свойство WindowStartupLocation определяет начальное расположение окна на экране.
+- Opacity --- свойство, которое задает прозрачность окна.
+- CanResize --- свойство, которое задает возможность изменять размер окна. Может иметь значение "True" или "False".
+- CanMinimize --- свойство, аналогичное предыдущему. Оно разрешает или запрещает сворачивание окна.
+- CanMaximize --- разрешает или запрещает максимизацию окна.
 
 == Стили для кнопок (Button)
 
+```axaml
+<Style Selector="Button.login">
+    <Setter Property="Background" Value="#514ED9"/>
+    <Setter Property="Foreground" Value="White"/>
+    <Setter Property="BorderBrush" Value="#7573D9"/>
+    <Setter Property="BorderThickness" Value="2"/>
+    <Setter Property="CornerRadius" Value="6"/>
+    <Setter Property="Margin" Value="10, 10"/>
+    <Setter Property="FontSize" Value="30"/>
+</Style>
+```
 
-== Стили для 
+Свойства:
+
+- BorderBrush --- свойство, которое задает цвет рамки кнопки. Значение может определяться аналогично Foreground и Background.
+- BorderThickness --- свойство, задающее толщину рамки кнопки.
+- CornerRadius - радиус скругления углов кнопки.
+- Margin --- свойство, задающее отступы кнопки с четырех сторон. Способы задания:
+  - Margin = "10" (одинаковый отступ слева, сверху, справа, снизу).
+  - Margin = "5, 10" (первое значение - отступ слева и справа, второе - сверху и снизу)
+  - Margin = "0, 5, 10, 15" (отступы определяются в следующем порядке: слева, сверху, справа, снизу)
+
+== Стили для TextBlock
+
+```axaml
+<Style Selector="TextBlock">
+    <Setter Property="Text" Value="Hello, World!"/>
+    <Setter Property="FontSize" Value="28"/>
+    <Setter Property="TextDecorations" Value="Underline"/>
+    <Setter Property="TextAlignment" Value="Center"/>
+    <Setter Property="Padding" Value="5"/>
+</Style>
+```
+
+Свойства:
+
+- Text --- свойство задает текстовое содержимое элемента.
+- FontSize --- свойство, задающее размер шрифта текста.
+- TextDecorations --- визуальное укращение текста.
+  - "Underline" --- подчеркивание текста.
+  - "Overline" --- линия над текстом.
+  - "Strikethrough" --- зачеркивание текста.
+- TextAlignment --- свойство, задающее выравнивание текста внутри блока.
+- Padding --- свойство, которое задает внутренние отступы вокруг текста.

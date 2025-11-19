@@ -204,8 +204,8 @@
 						inset: 0pt,
 						heading, none, it.fill, none, it.page()
 					)
-				}
-				pagebreak()
+				}	
+				pagebreak(weak: true)
 				outline(indent: 2%, title: [Содержание])
 			},
 		/*

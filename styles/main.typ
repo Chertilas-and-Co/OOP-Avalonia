@@ -1,3 +1,27 @@
+#import "../lab1/conf.typ" : conf
+#show: conf.with(
+  type: "pract",
+  info: (
+      author: (
+        name: [],
+        faculty: [],
+        group: "",
+        sex: ""
+      ),
+      inspector: (
+        degree: "",
+        name: ""
+      )
+  ),
+  settings: (
+    title_page: (
+      enabled: false
+    ),
+    contents_page: (
+      enabled: true
+    )
+  )
+)
 = Что такое стили?
 
 Стили в Avalonia --- это инструмент для настройки внешнего вида и поведения элементов управления, который аналогичен CSS в веб-разработке, но со своими особенностями. Avalonia использует XAML-подобный язык.
@@ -14,7 +38,7 @@ XAML-стиль состоит из двух основных частей:
 
 1. Внутри AXAML окна в \<Window.Styles\>. Данный способ является локальным. Стиль применится к конкретному окну. Приоритет локального стиля выши приоритета глобального.
 
-```axaml
+```xaml
 <Window>
   <Window.Styles>
     <Style Selector="...">
@@ -26,7 +50,7 @@ XAML-стиль состоит из двух основных частей:
 
 2. Глобально через файл App.axaml. В файле можно определить общие стили для всего приложения.
 
-```axaml
+```xaml
 <Application ...>
     <Application.Styles>
         <Style Selector="...">
@@ -41,14 +65,14 @@ XAML-стиль состоит из двух основных частей:
 
 Например, в App.axaml определен следующий стиль:
 
-```axaml
+```xaml
 <!--login это класс-->
 <Style Selector="Button.login"/>
 ```
 
 А в MainWindow.axaml созданы две кнопки. Стиль задается за счет указания свойства "Classes".
 
-```axaml
+```xaml
 <Button Name="button1" Classes="login"/>
 <Button Name="button2"/>
 ```
@@ -62,7 +86,7 @@ XAML-стиль состоит из двух основных частей:
 
 Пример создания стиля для окна (Window)
 
-```axaml
+```xaml
 <Style Selector="Window">
     <Setter Property="Background" Value="#5E4BD8"/>
     <Setter Property="Foreground" Value="White"/>
@@ -92,7 +116,7 @@ XAML-стиль состоит из двух основных частей:
 
 == Стили для кнопок (Button)
 
-```axaml
+```xaml
 <Style Selector="Button.login">
     <Setter Property="Background" Value="#514ED9"/>
     <Setter Property="Foreground" Value="White"/>
@@ -116,7 +140,7 @@ XAML-стиль состоит из двух основных частей:
 
 == Стили для TextBlock
 
-```axaml
+```xaml
 <Style Selector="TextBlock">
     <Setter Property="Text" Value="Hello, World!"/>
     <Setter Property="FontSize" Value="28"/>
@@ -139,7 +163,7 @@ XAML-стиль состоит из двух основных частей:
 
 == Стили для TextBox
 
-```axaml
+```xaml
 <Style Selector="TextBox.name">
     <Setter Property="Watermark" Value="имя"/> 
     <Setter Property="IsReadOnly" Value="False"/>
@@ -152,7 +176,7 @@ XAML-стиль состоит из двух основных частей:
 
 == Стили для границ (Border)
 
-```axaml
+```xaml
 <Style Selector="Border.styleOne">
     <Setter Property="Height" Value="100"/>
     <Setter Property="Width" Value="100"/>
@@ -167,7 +191,7 @@ XAML-стиль состоит из двух основных частей:
 
 == Стили для StackPanel
 
-```axaml
+```xaml
 <Style Selector="StackPanel.styleTwo">
     <Setter Property="Orientation" Value="Horizontal"/>
     <Setter Property="Spacing" Value="10"/>
@@ -191,7 +215,7 @@ XAML-стиль состоит из двух основных частей:
 
 Например,
 
-```axaml
+```xaml
 <Style Selector="CheckBox.styleThree"
     <Setter Property="Background" Value="White"/>
 </Style>

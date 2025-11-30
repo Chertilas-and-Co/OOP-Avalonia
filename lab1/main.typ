@@ -473,3 +473,167 @@ finally
 - `Math.Round(a)` --- округление числа;
 
 Более подробную информацию смотрите в приложении.
+
+== Пример написания программы
+
+*Задание:* составить программу вычисления для заданных значений x, y, z арифметического выражения
+
+$
+u = tg^2 (x + y) - e^(y - z) sqrt(cos x^2 + sin z^2).
+$
+
+Панель диалога программы организовать в виде, представленном на изображении:
+
+#figure(
+  image("images/img2_1.png", width: 60%),
+  caption: [Внешний вид программы.]
+)
+
+Для вывода результатов используется элемент управления `TextBox`, который в Avalonia может работать как многострочный редактор.
+Чтобы обеспечить возможность ввода и вывода нескольких строк, необходимо установить свойство `AcceptsReturn="True"`. Это позволяет переносить текст на новую строку и растягивать элемент как по горизонтали, так и по вертикали.
+Для отображения полосы прокрутки используется attached-свойство:
+
+```xaml
+ScrollViewer.VerticalScrollBarVisibility="Visible"
+```
+
+После установки этих свойств окно будет позволять просматривать большие объёмы текста.
+
+В многострочном текстовом поле Avalonia также существует свойство Text, которое содержит весь текст, отображаемый в элементе.
+Добавление новой строки выполняется так же, как и в стандартных приложениях C\# --- с помощью конструкции:
+
+```cs
+textBox4.Text += Environment.NewLine + "Привет";
+```
+
+В этом примере к текущему содержимому окна добавляется символ переноса строки (который может отличаться в разных операционных системах, поэтому используется свойство класса `Environment.NewLine`) и сама новая строка.
+Если добавляется числовое значение, то его предварительно нужно привести к строковому виду методом `ToString()`.
+
+Работа с программой происходит следующим образом. Нажмите (щелкните мышью) кнопку "Выполнить". В окне `textBox4` появляется результат. Измените исходные значения x, y, z в окнах `textBox1` --- `textBox3` и снова нажмите кнопку "Выполнить" --- появится новые результаты.
+
+*Полный код программы имеет следующий вид:*
+
+MainWindow.axaml:
+
+```xaml
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="test.MainWindow"
+        Title="Лабораторная работа №1"
+        Width="420" Height="420">
+
+    <StackPanel Margin="10" Spacing="6">
+
+        <TextBlock Text="Введите значение X:"/>
+        <TextBox Name="textBox1" Width="200"/>
+
+        <TextBlock Text="Введите значение Y:"/>
+        <TextBox Name="textBox2" Width="200"/>
+
+        <TextBlock Text="Введите значение Z:"/>
+        <TextBox Name="textBox3" Width="200"/>
+
+        <TextBlock Text="Результат выполнения программы:"/>
+
+        <TextBox Name="textBox4"
+                 AcceptsReturn="True"
+                 ScrollViewer.VerticalScrollBarVisibility="Visible"
+                 Height="160"
+                 Width="360"
+                 IsReadOnly="True"/>
+
+        <Button Name="button1"
+                Content="Выполнить"
+                HorizontalAlignment="Right"
+                Width="100"
+                Click="OnButtonClick"/>
+
+    </StackPanel>
+
+</Window>
+```
+
+MainWindow.axaml.cs:
+
+```cs
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+using System;
+
+namespace MyFirstApp;
+
+public partial class MainWindow : Window
+{
+    public MainWindow()
+    {
+        InitializeComponent();
+
+        textBox1.Text = "3.4";   // Начальное значение X
+        textBox2.Text = "0.74";  // Начальное значение Y
+        textBox3.Text = "19.43"; // Начальное значение Z
+
+        // Вывод строки в многострочный редактор
+        textBox4.Text = "Лаб. раб. №1. Иванов А.А. 251 гр.";
+    }
+
+    private void OnButtonClick(object? sender, RoutedEventArgs e)
+    {
+        try
+        {
+            // Считывание значения X
+            double x = double.Parse(textBox1.Text!);
+
+            // Вывод значения X
+            textBox4.Text += Environment.NewLine +
+                             "X = " + x.ToString();
+
+            // Считывание значение Y
+            double y = double.Parse(textBox2.Text!);
+
+            // Вывод значения Y
+            textBox4.Text += Environment.NewLine +
+                             "Y = " + y.ToString();
+
+            // Считывание значения Z
+            double z = double.Parse(textBox3.Text!);
+
+            // Вывод значения Z
+            textBox4.Text += Environment.NewLine +
+                             "Z = " + z.ToString();
+
+            // Вычисление арифметическое выражение
+            double a = Math.Tan(x + y) * Math.Tan(x + y);
+            double b = Math.Exp(y - z);
+            double c = Math.Sqrt(Math.Cos(x * x) + Math.Sin(z * z));
+            double u = a - b * c;
+
+            // Вывод результата
+            textBox4.Text += Environment.NewLine +
+                             "Результат U = " + u.ToString();
+        }
+        catch (FormatException)
+        {
+            textBox4.Text += Environment.NewLine +
+                             "Ошибка: введите корректные числовые значения.";
+        }
+        catch (Exception ex)
+        {
+            textBox4.Text += Environment.NewLine +
+                             "Неизвестная ошибка: " + ex.Message;
+        }
+    }
+}
+```
+
+*Представление в экспоненциальной форме чисел:*
+
+$1 "e" 2 --> 1 * 10^2$
+
+$1 "e" - 2 --> 1 * 10^(-2)$
+
+```cs
+string s = textBox1.Text;
+double a = double.Parse(s);
+double b = a * a + 1e2 + 1e-2;
+textBox1.Text = b.ToString();
+```

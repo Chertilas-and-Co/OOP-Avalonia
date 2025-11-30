@@ -29,7 +29,7 @@
       diploma: [Выпускная квалификационная работа],
       autoref: [работа],
       nir: [работа],
-      pract: [Отчёт о практике],
+      pract: [],
     ),
     from_course: "курса",
     from_group: "группы",
@@ -80,6 +80,7 @@
   set text(size: code_font_size)
   zebraw(
       lang: false,
+      numbering: false,
       code,
   )
 }
@@ -90,110 +91,6 @@
 }
 
 #let modules = (
-  /*
-   * Модуль информации об авторе Позволяет получать более полную и
-   * отформатированную информацию об авторе: студент/студентки/студентов
-   * (get_author_sex), номер курса, группы и так далее. Конечно, некоторые из
-   * этих вещей в открытом виде лежат в словаре author, но некоторые данные
-   * нуждаются в постобработке или вовсе получаются косвенным путём.
-   * Необходимость в постобработке может возникнуть и позднее, поэтому
-   * настоятельно рекомендуется пользоваться именно этими методами, а не
-   * получать код напрямую.
-   */
-  author_info: (
-    /*
-     * Определяет студенческо-половую сущность автора.
-     * Принимает:
-     *  - author - словарь про автора
-     * Возвращает:
-     *  - В зависимости от пола: "студента", "студентки", "студентов"
-     */
-    get_author_sex: author => {
-      return strings.student.at(
-        author.at("sex"),
-        default: strings.error.no_sex,
-      )
-    },
-    /*
-     * Определяет курс автора (по номеру группы)
-     * Принимает:
-     *  - author - словарь про автора
-     * Возвращает:
-     *  - Номер курса в строковом формате
-     */
-    get_author_course: author => {
-      return author.group.at(0)
-    },
-    /*
-     * Определяет группу автора
-     * Принимает:
-     *  - author - словарь про автора
-     * Возвращает:
-     *  - Номер группы в строковом формате
-     * Примечание: на текущий момент функция ничего не делает, но, возможно,
-     * это не навсегда и в будущем здесь что-то может появиться. Чтобы потом не
-     * мучиться с рефакторингом, лучше получать номер группы через неё.
-     */
-    get_author_group: author => {
-      return author.group
-    },
-    /*
-     * Определяет код и название направления автора
-     * Принимает:
-     *  - author - словарь про автора
-     * Возвращает:
-     *  - author.speciality, если таковой указан
-     *  - В противном случае, если студент учится на КНиИТе, для студента
-     *    работает аттракцион невиданной технологичности: код и название
-     *    специальности определяются автоматически
-     */
-    get_speciality: author => {
-      if author.at("speciality", default: none) != none {
-        return author.speciality
-      } else if author.faculty == [КНиИТ] {
-        let specialities = (
-          strings.specialities.bac_fiit,
-          strings.specialities.bac_ivt,
-          strings.specialities.spec_kb,
-          strings.specialities.bac_moais,
-          strings.specialities.bac_pi,
-          [], // x6x
-          strings.specialities.mag_ivt,
-          strings.specialities.mag_moais,
-          [], // x8x
-        )
-        if author.group.at(1) == "7" {
-          // x7x
-          if author.group.at(2) == "1" {
-            // x71
-            return specialities.at(6) // ивт
-          } else if author.group.at(2) == "3" {
-            // x73
-            return specialities.at(7) // моаис
-          }
-          return []
-        }
-        let id = int(author.group.at(1)) - 1
-
-        if id < 0 or id > 8 {
-          return []
-        }
-        return specialities.at(id)
-      }
-      return strings.error.undefined_spec
-    },
-  ),
-  /*
-   * Модуль титульного листа Здесь происходит генерация титульного листа и
-   * определяются все необходимые для этого методы. Поскольку его создание ---
-   * задача не такая уж и тривиальная, здесь есть много приватных методов и ваш
-   * покорный слуга ещё раз напоминает о нежелательности их вызова извне. Если
-   * такая необходимость всё же возникает, лучше переименовать метод и убрать
-   * подчёркивание: впоследствии это можно будет хотя бы как-то отладить.
-   *
-   * Изначально задумывалось, что единственный доступный для вызова извне метод
-   * --- make, а в остальных не должно возникнуть необходимости.
-   */
   title: (
     /*
      * Отвечает за вывод названия министерства и
@@ -221,9 +118,6 @@
       par(data.worktype)
       v(1.5cm)
       set align(left)
-      text(data.group + "\n")
-      text(data.speciality + "\n")
-      text(data.faculty + "\n" + data.author)
     },
     /*
      * Отвечает за вывод города и года на титульном листе
@@ -234,86 +128,66 @@
       text(strings.title.city + " " + str(datetime.today().year()))
     },
     /*
-     * Подпись "Проверено:" для титульного листа
+     * строка "студента такой-то группы" для титульного листа
      */
-    _signature: (post, name) => {
-      text("Проверено:\n")
-      grid(
-        columns: (1fr,) * 3,
-        align: (left, center, right),
-        row-gutter: 5pt,
-        post, block(inset: (y: 13pt), line(length: 3cm, stroke: .4pt)), name
-      )
-    },
+    // _get_author_string: (self, author) => {
+    //   let sex = (self.author_info.get_author_sex)(author)
+    //   let course = (self.author_info.get_author_course)(author)
+    //   let group = (self.author_info.get_author_group)(author)
+    //   if course.len() > 0 {
+    //     course = (self.utils.strglue)(course, strings.title.from_course)
+    //   }
+    //   if group.len() > 0 {
+    //     group = (self.utils.strglue)(group, strings.title.from_group)
+    //   }
+    //   let result = (self.utils.strglue)(sex, course, group)
+    //   return result
+    // },
     /*
-     * Строка "студента такой-то группы" для титульного листа
-     */
-    _get_author_string: (self, author) => {
-      let sex = (self.author_info.get_author_sex)(author)
-      let course = (self.author_info.get_author_course)(author)
-      let group = (self.author_info.get_author_group)(author)
-      if course.len() > 0 {
-        course = (self.utils.strglue)(course, strings.title.from_course)
-      }
-      if group.len() > 0 {
-        group = (self.utils.strglue)(group, strings.title.from_group)
-      }
-      let result = (self.utils.strglue)(sex, course, group)
-      return result
-    },
-    /*
-     * Получает заголовок титульного листа.
-     * Принимает:
+     * получает заголовок титульного листа.
+     * принимает:
      *  - info - информация о документе
-     * Возвращает:
-     *  - В зависимости от типа:
-     *    - Тему работы, если это не автореферат и не отчёт по НИРу
-     *    - В противном случае названия соответствующих типов работ
+     * возвращает:
+     *  - в зависимости от типа:
+     *    - тему работы, если это не автореферат и не отчёт по ниру
+     *    - в противном случае названия соответствующих типов работ
      */
     _get_title_string: info => {
       if info.type == "autoref" {
-        return [АВТОРЕФЕРАТ]
+        return [автореферат]
       }
       if info.type == "nir" {
-        return [ОТЧЁТ О НАУЧНО-ИССЛЕДОВАТЕЛЬСКОЙ РАБОТЕ]
+        return [отчёт о научно-исследовательской работе]
       }
-      return info.at("title", default: [Тема работы])
+      return info.at("title", default: [тема работы])
     },
     /*
-     * Генерирует строки текста для вывода на титульном листе
-     * Принимает:
+     * генерирует строки текста для вывода на титульном листе
+     * принимает:
      *  - info - информация о документе
-     * Возвращает:
-     *  - Словарь:
-     *     title: Заголовок
-     *     worktype: Тип работы
+     * возвращает:
+     *  - словарь:
+     *     title: заголовок
+     *     worktype: тип работы
      *     group: студент(а|ки|ов) s курса sex группы
-     *     specialty: направления 69.14.88 --- Специальность
-     *     faculty: факультета XXX
+     *     specialty: направления 69.14.88 --- специальность
+     *     faculty: факультета xxx
      *     author: автор(ы)? работы
      */
     _get_strings: (self, info) => {
       let author = info.at("author", default: (:))
       let title_string = (self.title._get_title_string)(info)
       let worktype = strings.title.worktypes.at(info.type, default: [])
-      let group_string = (self.title._get_author_string)(self, author)
-      let speciality_string = (self.utils.strglue)(
-        strings.title.from_speciality,
-        (self.author_info.get_speciality)(author),
-      )
       let faculty_string = "факультета " + author.faculty
       return (
         title: title_string,
         worktype: worktype,
-        group: group_string,
-        speciality: speciality_string,
         faculty: faculty_string,
-        author: author.name,
       )
     },
     /*
-     * Генерирует титульный лист
-     * Принимает:
+     * генерирует титульный лист
+     * принимает:
      *  - info - информация о документе
      */
     make: (self, info) => {
@@ -321,13 +195,12 @@
       (self.title._default_header)()
       (self.title._default_body)(strs)
       v(1fr)
-      (self.title._signature)(info.inspector.degree, info.inspector.name)
       (self.title._default_footer)()
     },
   ),
   /*
-   * Модуль генерации документа Здесь содержатся методы, влияющие на вид всего
-   * документа в целом. Главный из них --- make --- вызывается из точки входа в
+   * модуль генерации документа здесь содержатся методы, влияющие на вид всего
+   * документа в целом. главный из них --- make --- вызывается из точки входа в
    * стилевой файл и отвечает за всё оформление выходного документа.
    */
   document: (
@@ -344,8 +217,8 @@
       v(line_spacing / 2)
     },
     /*
-     * Генерирует страницу содержания
-     * Принимает:
+     * генерирует страницу содержания
+     * принимает:
      *  - info - информация о документе
      */
     make_toc: (info: ()) => {

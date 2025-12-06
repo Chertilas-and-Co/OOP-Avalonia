@@ -758,7 +758,7 @@ bool b;
 Форма сокращенного оператора `if`:
 
 ```cs
-if (B) 
+if (B)
 {
     S;
 }
@@ -777,11 +777,11 @@ if (B) S;
 Форма полного оператора `if`:
 
 ```cs
-if (B) 
+if (B)
 {
     S1;
 }
-else 
+else
 {
     S2;
 }
@@ -798,12 +798,12 @@ if (B) S1; else S2;
 
 Пример. Вычислим значение функции
 
-$ 
-y(x) = cases(
-  sin(x)\,  x <= a\,,
-  cos(x)\,  a < x < b\,,
-  tg(x)\,  x >= b\,,
-)
+$
+  y(x) = cases(
+    sin(x)\, x <= a\,,
+    cos(x)\, a < x < b\,,
+    tg(x)\, x >= b.
+  )
 $
 
 Указанное выражение может быть запрограммировано в следующем виде:
@@ -825,15 +825,15 @@ if (x <= a) y = Math.Sin(x);
 Оператор выбора `switch` предназначен для разветвления процесса вычислений по нескольким направлениям. Формат оператора:
 ```cs
 switch (<выражение>)
-{ 
-    case <константное_выражение_1>: 
+{
+    case <константное_выражение_1>:
         [<оператор 1>]; <оператор перехода>;
-    case <константное_выражение_2>: 
-        [<оператор 2>]; <оператор перехода>; 
+    case <константное_выражение_2>:
+        [<оператор 2>]; <оператор перехода>;
     ...
-    case <константное_выражение_n>: 
+    case <константное_выражение_n>:
         [<оператор n>]; <оператор перехода>;
-    [default: <оператор>;] 
+    [default: <оператор>;]
 }
 ```
 
@@ -860,3 +860,274 @@ switch (caseSwitch)
         break;
 }
 ```
+
+== Кнопки-переключатели RadioButton
+
+При создании программ с графическим интерфейсом в Avalonia для организации разветвлений часто используются компоненты в виде кнопок-переключателей (`RadioButton`).
+Состояние такой кнопки (включено/выключено) визуально отображается в интерфейсе: если пользователь выбирает один из вариантов переключателя в группе, все остальные автоматически отключаются.
+
+В Avalonia все `RadioButton`, находящиеся в одном контейнере, образуют группу. Чтобы создать в одном окне несколько независимых групп переключателей, каждую группу размещают в своём отдельном контейнере: `StackPanel`, `Grid`, `Border` и т. д.
+
+В окне (Рис.@img3) элементы `RadioButton` сгруппированы внутри контейнера `Grid`.
+Каждый переключатель имеет свойство `IsChecked`, определяющее его текущее состояние.
+
+Номер выбранного варианта (0, 1, 2, ...) передаётся в программу и анализируется при помощи оператора `switch`.
+
+== Пример написания программы
+
+*Задание:* ввести три числа x, y, z. Вычислить величину
+
+$
+  U = cases(
+    y * f(x)^2 + z\, z - x = 0\,,
+    y * e^(f(x)) - z\, z - x < 0\,,
+    y * sin(f(x)) + z\, z - x > 0.
+  )
+$
+
+В качестве функции $f(x)$ используется один из вариантов по выбору пользователя:
+$sin(x)$, $cos(x)$, $e^x$.
+
+=== Создание окна
+
+Создайте окно в соответствии с Рис.@img3.
+
+#figure(
+  image("./images/img3_1.png", width: 80%),
+  caption: [Окно лабораторной работы],
+)<img3>
+
+Для первой радиокнопки установите:
+
+```xaml
+IsChecked="True"
+```
+
+Также разместите на форме элементы `Label`, `TextBox` и `Button`.
+Поле для вывода результатов --- это многострочный TextBox с установленным свойством:
+
+```xaml
+AcceptsReturn="True"
+```
+
+и включённой вертикальной прокруткой:
+```xaml
+ScrollViewer.VerticalScrollBarVisibility="Visible"
+```
+
+Итоговый код файла MainWindow.axaml будет выглядеть следующим образом:
+```xaml
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Lab1_3.MainWindow"
+        Title="Лабораторная работа № 1.3"
+        Width="500" Height="420"
+        CanResize="False">
+
+    <Grid Margin="12">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="160"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Ввод X -->
+        <TextBlock Grid.Row="0" Grid.Column="0"
+                   VerticalAlignment="Center" Margin="0 4"
+                   Text="X =" />
+        <TextBox Grid.Row="0" Grid.Column="1"
+                 Name="textBox1" Width="120" Margin="4 4"/>
+
+        <!-- Ввод Y -->
+        <TextBlock Grid.Row="1" Grid.Column="0"
+                   VerticalAlignment="Center" Margin="0 4"
+                   Text="Y =" />
+        <TextBox Grid.Row="1" Grid.Column="1"
+                 Name="textBox2" Width="120" Margin="4 4"/>
+
+        <!-- Ввод Z -->
+        <TextBlock Grid.Row="2" Grid.Column="0"
+                   VerticalAlignment="Center" Margin="0 4"
+                   Text="Z =" />
+        <TextBox Grid.Row="2" Grid.Column="1"
+                 Name="textBox3" Width="120" Margin="4 4"/>
+
+
+        <!-- Контейнер с переключателями -->
+        <Border Grid.Row="0" Grid.Column="2"
+                Grid.RowSpan="3"
+                BorderBrush="Gray" BorderThickness="1"
+                CornerRadius="6"
+                Margin="10 0 0 0" Padding="8">
+
+            <StackPanel>
+                <TextBlock Text="F(x)"
+                           FontWeight="Bold"
+                           Margin="2 0 0 6"/>
+
+                <RadioButton Name="rbSin" Content="sin(x)" IsChecked="True"/>
+                <RadioButton Name="rbCos" Content="cos(x)"/>
+                <RadioButton Name="rbExp" Content="exp(x)"/>
+            </StackPanel>
+
+        </Border>
+
+
+        <!-- Поле вывода -->
+        <TextBox Grid.Row="3" Grid.ColumnSpan="3"
+                 Name="textBox4"
+                 AcceptsReturn="True"
+                 IsReadOnly="True"
+                 Margin="0 10 0 10"
+                 Height="160"
+                 ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+
+
+        <!-- Кнопки -->
+        <StackPanel Grid.Row="5" Grid.ColumnSpan="3"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Spacing="20" Margin="0 5 0 0">
+
+            <Button Name="btnRun"
+                    Content="ПУСК"
+                    Width="120" Height="36"
+                    Click="OnRunClick"/>
+
+            <Button Name="btnClear"
+                    Content="Очистить"
+                    Width="120" Height="36"
+                    Click="OnClearClick"/>
+        </StackPanel>
+
+    </Grid>
+</Window>
+```
+
+=== Создание обработчиков событий
+
+Обработчики событий создаются аналогично предыдущим примерам.
+Ниже приведён код файла MainWindow.axaml.cs:
+
+```cs
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+using System;
+
+namespace test;
+
+public partial class MainWindow : Window
+{
+    public MainWindow()
+    {
+        InitializeComponent();
+    }
+
+    // Обработка кнопки "ПУСК"
+    private void OnRunClick(object? sender, RoutedEventArgs e)
+    {
+        textBox4.Text = ""; // Очистка перед выводом нового результата
+
+        try
+        {
+            // Получение исходных данных
+            double x = double.Parse(textBox1.Text!);
+            double y = double.Parse(textBox2.Text!);
+            double z = double.Parse(textBox3.Text!);
+
+            // Вывод исходных данных
+            textBox4.Text =
+                "Результаты работы программы Петрова И.И." + Environment.NewLine +
+                "При X = " + x + Environment.NewLine +
+                "При Y = " + y + Environment.NewLine +
+                "При Z = " + z + Environment.NewLine;
+
+            // Определение выбранной функции f(x)
+            int n = 0;
+            if (rbCos.IsChecked == true)
+            {
+                n = 1;
+            }
+            else if (rbExp.IsChecked == true)
+            {
+                n = 2;
+            }
+
+            // Выбор функции f(x)
+            double fx;
+
+            switch (n)
+            {
+                case 0:
+                    fx = Math.Sin(x);
+                    break;
+
+                case 1:
+                    fx = Math.Cos(x);
+                    break;
+
+                case 2:
+                    fx = Math.Exp(x);
+                    break;
+
+                default:
+                    fx = 0;
+                    break;
+            }
+
+            // Вычисление U
+            double u;
+            double diff = z - x;
+
+            if (diff == 0)
+            {
+                u = y * fx * fx + z;
+            }
+            else if (diff < 0)
+            {
+                u = y * Math.Exp(fx) - z;
+            }
+            else
+            {
+                u = y * Math.Sin(fx) + z;
+            }
+
+            // Вывод результата
+            textBox4.Text += "U = " + u.ToString() + Environment.NewLine;
+        }
+        catch (FormatException)
+        {
+            textBox4.Text += Environment.NewLine +
+                "Ошибка: введены некорректные данные.";
+        }
+        catch (Exception ex)
+        {
+            textBox4.Text += Environment.NewLine +
+                "Неизвестная ошибка: " + ex.Message;
+        }
+    }
+
+    // Обработка кнопки "Очистить"
+    private void OnClearClick(object? sender, RoutedEventArgs e)
+    {
+        textBox1.Text = "";
+        textBox2.Text = "";
+        textBox3.Text = "";
+        textBox4.Text = "";
+    }
+}
+```
+
+Запустите программу и убедитесь в том, что все ветви алгоритма выполняются правильно.
+
+== Индивидуальные задания
+

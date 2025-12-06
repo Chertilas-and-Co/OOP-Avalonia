@@ -312,7 +312,7 @@
         ],
       )
       set page(numbering: "1")
-      set math.equation(numbering: "(1)")
+      // set math.equation(numbering: "(1)")
 
       set figure.caption(separator: [ -- ])
       show figure.caption: set text(size: figure_font_size)

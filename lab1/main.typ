@@ -26,6 +26,125 @@
 )
 
 = Начало работы с Avalonia
+
+== Установка
+
+Avalonia --- это кроссплатформенный фреймворк, работать с ним можно и на Windows, и на Linux, и на MacOS. Рассмотрим основные способы установки этого фреймворка на разные системы:
+
+=== Visual Studio (только для Windows)
+
+В скриншотах будет приводиться Visual Studio 2026, но алгоритм установки Avalonia на Visual Studio 2022 аналогичен приведённому ниже.
+
+Откройте Visual Studio Installer и нажмите "изменить" около вашей версии Visual Studio.
+
+#figure(
+  image("./images/starting_with_avalonia/visual_studio/vs_installer.png", width: 80%),
+  caption: [Visual Studio Installer],
+)
+
+Добавьте в Visual Studio компонент "Разработка классических приложений .NET".
+
+#figure(
+  image("./images/starting_with_avalonia/visual_studio/editing_vs.png", width: 80%),
+  caption: [Добавление компонента],
+)
+
+После установки откройте Visual Studio, нажмите на вкладку "Расширения" и выберите "Управление расширениями".
+
+#figure(
+  image("./images/starting_with_avalonia/visual_studio/extensions.png", width: 80%),
+  caption: [Открытие менеджера расширений],
+)
+
+Напишите в поиске "Avalonia" и установите расширение Avalonia от Avalonia Team.
+
+#figure(
+  image("./images/starting_with_avalonia/visual_studio/avalonia_extension.png", width: 80%),
+  caption: [Установка расширения для работы с Avalonia]
+)
+
+Выйдите из Visual Studio, в установщике расширений, который должен был появиться вскоре после этого, нажмите "Modify" и дождитесь конца его работы.
+
+#figure(
+  image("images/starting_with_avalonia/visual_studio/vsix_installer.png", width: 80%),
+  caption: [VSIX Installer]
+)
+
+После этого откройте Visual Studio, начните создавать новый проект, из шаблонов выберите "Avalonia .NET App (Avalonia UI)" и продолжите создание проекта.
+
+#figure(
+  image("images/starting_with_avalonia/visual_studio/avalonia_template.png", width: 80%),
+  caption: [Создание проекта]
+)
+
+И, в конце концов, вас встретит окно с готовым проектом Avalonia, с которым Вы можете продолжать работу.
+
+#figure(
+  image("images/starting_with_avalonia/visual_studio/avalonia_final.png", width: 80%),
+  caption: [Готовый проект в Visual Studio]
+)
+
+=== Visual Studio Code (любые платформы)
+
+Установите следующие расширения: C\# Dev Kit от Microsoft, Avalonia for VSCode от Avalonia Team и Avalonia Templates от Adel Bakshi.
+
+#figure(
+  image("images/starting_with_avalonia/vs_code/cs_dev_kit.png", width: 80%),
+  caption: [C\# Dev Kit]
+)
+
+#figure(
+  image("images/starting_with_avalonia/vs_code/avalonia_for_vscode.png", width: 80%),
+  caption: [Avalonia for VSCode]
+)
+
+#figure(
+  image("images/starting_with_avalonia/vs_code/avalonia_templates.png", width: 80%),
+  caption: [Avalonia Templates]
+)
+
+После этого создайте Avalonia-проект, нажав на кнопку "Create Avalonia Project".
+
+#figure(
+  image("images/starting_with_avalonia/vs_code/avalonia_create.png", width: 80%),
+  caption: [Создание проекта]
+)
+
+Теперь вы можете изменять и развивать уже готовый проект в Visual Studio Code.
+
+#figure(
+  image("images/starting_with_avalonia/vs_code/avalonia_final.png", width: 80%),
+  caption: [Готовый проект в Visual Studio Code]
+)
+
+===  Bash (любые платформы)
+
+Установите .NET на Вашу платформу. Действия отличаются от системы к системе, поэтому следуйте официальному гайду от Microsoft. 
+
+#link("https://learn.microsoft.com/en-us/dotnet/core/install/")
+
+Установите шаблоны Avalonia с помощью следующей команды:
+
+```sh
+dotnet new install Avalonia.Templates
+```
+
+Создайте из одного из шаблонов проект под названием, например, `MyApp`.
+
+```sh
+dotnet new avalonia.app -o MyApp
+```
+
+Эта команда создаст новую папку c названием `MyApp`.
+Теперь достаточно зайти в эту папку и запустить проект.
+
+```sh
+cd MyApp
+dotnet run
+```
+
+Код приложения Вы можете редактировать с помощью любого текстового редактора.
+
 == Настройка окна приложения
 
 После создания проекта Avalonia App у вас автоматически появится главное окно --- MainWindow.axaml, а также связанный с ним файл кода MainWindow.axaml.cs.

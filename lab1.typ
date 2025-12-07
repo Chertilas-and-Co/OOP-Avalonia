@@ -1,4 +1,4 @@
-#import "conf.typ": conf
+#import "conf/conf.typ": conf
 #show: conf.with(
   title: [= Лабораторная работа №1
     Визуальное проектирование в С\#],
@@ -38,49 +38,49 @@ Avalonia --- это кроссплатформенный фреймворк, р�
 Откройте Visual Studio Installer и нажмите "изменить" около вашей версии Visual Studio.
 
 #figure(
-  image("./images/starting_with_avalonia/visual_studio/vs_installer.png", width: 80%),
+  image("lab1_imports/images/starting_with_avalonia/visual_studio/vs_installer.png", width: 80%),
   caption: [Visual Studio Installer],
 )
 
 Добавьте в Visual Studio компонент "Разработка классических приложений .NET".
 
 #figure(
-  image("./images/starting_with_avalonia/visual_studio/editing_vs.png", width: 80%),
+  image("lab1_imports/images/starting_with_avalonia/visual_studio/editing_vs.png", width: 80%),
   caption: [Добавление компонента],
 )
 
 После установки откройте Visual Studio, нажмите на вкладку "Расширения" и выберите "Управление расширениями".
 
 #figure(
-  image("./images/starting_with_avalonia/visual_studio/extensions.png", width: 80%),
+  image("lab1_imports/images/starting_with_avalonia/visual_studio/extensions.png", width: 80%),
   caption: [Открытие менеджера расширений],
 )
 
 Напишите в поиске "Avalonia" и установите расширение Avalonia от Avalonia Team.
 
 #figure(
-  image("./images/starting_with_avalonia/visual_studio/avalonia_extension.png", width: 80%),
+  image("lab1_imports/images/starting_with_avalonia/visual_studio/avalonia_extension.png", width: 80%),
   caption: [Установка расширения для работы с Avalonia]
 )
 
 Выйдите из Visual Studio, в установщике расширений, который должен был появиться вскоре после этого, нажмите "Modify" и дождитесь конца его работы.
 
 #figure(
-  image("images/starting_with_avalonia/visual_studio/vsix_installer.png", width: 80%),
+  image("lab1_imports/images/starting_with_avalonia/visual_studio/vsix_installer.png", width: 80%),
   caption: [VSIX Installer]
 )
 
 После этого откройте Visual Studio, начните создавать новый проект, из шаблонов выберите "Avalonia .NET App (Avalonia UI)" и продолжите создание проекта.
 
 #figure(
-  image("images/starting_with_avalonia/visual_studio/avalonia_template.png", width: 80%),
+  image("lab1_imports/images/starting_with_avalonia/visual_studio/avalonia_template.png", width: 80%),
   caption: [Создание проекта]
 )
 
 И, в конце концов, вас встретит окно с готовым проектом Avalonia, с которым Вы можете продолжать работу.
 
 #figure(
-  image("images/starting_with_avalonia/visual_studio/avalonia_final.png", width: 80%),
+  image("lab1_imports/images/starting_with_avalonia/visual_studio/avalonia_final.png", width: 80%),
   caption: [Готовый проект в Visual Studio]
 )
 
@@ -89,31 +89,31 @@ Avalonia --- это кроссплатформенный фреймворк, р�
 Установите следующие расширения: C\# Dev Kit от Microsoft, Avalonia for VSCode от Avalonia Team и Avalonia Templates от Adel Bakshi.
 
 #figure(
-  image("images/starting_with_avalonia/vs_code/cs_dev_kit.png", width: 80%),
+  image("lab1_imports/images/starting_with_avalonia/vs_code/cs_dev_kit.png", width: 80%),
   caption: [C\# Dev Kit]
 )
 
 #figure(
-  image("images/starting_with_avalonia/vs_code/avalonia_for_vscode.png", width: 80%),
+  image("lab1_imports/images/starting_with_avalonia/vs_code/avalonia_for_vscode.png", width: 80%),
   caption: [Avalonia for VSCode]
 )
 
 #figure(
-  image("images/starting_with_avalonia/vs_code/avalonia_templates.png", width: 80%),
+  image("lab1_imports/images/starting_with_avalonia/vs_code/avalonia_templates.png", width: 80%),
   caption: [Avalonia Templates]
 )
 
 После этого создайте Avalonia-проект, нажав на кнопку "Create Avalonia Project".
 
 #figure(
-  image("images/starting_with_avalonia/vs_code/avalonia_create.png", width: 80%),
+  image("lab1_imports/images/starting_with_avalonia/vs_code/avalonia_create.png", width: 80%),
   caption: [Создание проекта]
 )
 
 Теперь вы можете изменять и развивать уже готовый проект в Visual Studio Code.
 
 #figure(
-  image("images/starting_with_avalonia/vs_code/avalonia_final.png", width: 80%),
+  image("lab1_imports/images/starting_with_avalonia/vs_code/avalonia_final.png", width: 80%),
   caption: [Готовый проект в Visual Studio Code]
 )
 
@@ -386,7 +386,7 @@ namespace MyFirstApp
 Эти типы сохраняются в разных местах памяти: типы значений сохраняются в области, известной как стек, а ссылочные типы --- в области, называемой управляемой кучей (heap).
 
 #figure(
-  image("./images/cs_var_types.png", width: 80%),
+  image("lab1_imports/images/cs_var_types.png", width: 80%),
   caption: [Схема типов данных в С\#],
 )
 
@@ -604,7 +604,7 @@ $
 Панель диалога программы организовать в виде, представленном на изображении:
 
 #figure(
-  image("images/img2_1.png", width: 60%),
+  image("lab1_imports/images/img2_1.png", width: 60%),
   caption: [Внешний вид программы.],
 )
 
@@ -1012,7 +1012,7 @@ $sin(x)$, $cos(x)$, $e^x$.
 Создайте окно в соответствии с Рис.@img3.
 
 #figure(
-  image("./images/img3_1.png", width: 80%),
+  image("lab1_imports/images/img3_1.png", width: 80%),
   caption: [Окно лабораторной работы],
 )<img3>
 

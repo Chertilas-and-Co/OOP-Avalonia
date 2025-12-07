@@ -1,4 +1,4 @@
-#import "../lab1/conf.typ" : conf
+#import "conf/conf.typ" : conf
 #show: conf.with(
   type: "pract",
   info: (

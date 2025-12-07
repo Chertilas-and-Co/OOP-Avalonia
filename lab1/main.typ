@@ -74,14 +74,47 @@ Avalonia --- это кроссплатформенный фреймворк, р�
 
 #figure(
   image("images/starting_with_avalonia/visual_studio/avalonia_template.png", width: 80%),
-  caption: [VSIX Installer]
+  caption: [Создание проекта]
 )
 
 И, в конце концов, вас встретит окно с готовым проектом Avalonia, с которым Вы можете продолжать работу.
 
 #figure(
   image("images/starting_with_avalonia/visual_studio/avalonia_final.png", width: 80%),
-  caption: [Рабочий проект]
+  caption: [Готовый проект в Visual Studio]
+)
+
+=== Visual Studio Code (любые платформы)
+
+Установите следующие расширения: C\# Dev Kit от Microsoft, Avalonia for VSCode от Avalonia Team и Avalonia Templates от Adel Bakshi.
+
+#figure(
+  image("images/starting_with_avalonia/vs_code/cs_dev_kit.png", width: 80%),
+  caption: [C\# Dev Kit]
+)
+
+#figure(
+  image("images/starting_with_avalonia/vs_code/avalonia_for_vscode.png", width: 80%),
+  caption: [Avalonia for VSCode]
+)
+
+#figure(
+  image("images/starting_with_avalonia/vs_code/avalonia_templates.png", width: 80%),
+  caption: [Avalonia Templates]
+)
+
+После этого создайте Avalonia-проект, нажав на кнопку "Create Avalonia Project".
+
+#figure(
+  image("images/starting_with_avalonia/vs_code/avalonia_create.png", width: 80%),
+  caption: [Создание проекта]
+)
+
+Теперь вы можете изменять и развивать уже готовый проект в Visual Studio Code.
+
+#figure(
+  image("images/starting_with_avalonia/vs_code/avalonia_final.png", width: 80%),
+  caption: [Готовый проект в Visual Studio Code]
 )
 
 == Настройка окна приложения

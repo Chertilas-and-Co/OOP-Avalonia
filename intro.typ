@@ -1,4 +1,4 @@
-#import "../lab1/conf.typ" : conf
+#import "conf/conf.typ" : conf
 #show: conf.with(
   title: [Альтернативный путь по C\# или как пройти предмет, если вы используете линукс],
   type: "pract",

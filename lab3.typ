@@ -2,7 +2,7 @@
 #import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
 
 #show: conf.with(
-  title: [= Лабораторная работа №3
+  title: [Лабораторная работа №3
   Часть 1. Дополнительно о массивах ],
   type: "pract",
   info: (
@@ -79,7 +79,7 @@ class Program
       }
       
       static void Main()
-      {
+      { 
          int[] myArray = { 0, -1, -2, 3, 4, 5, -6, -7, 8, -9 };
          Print(10, myArray);
          Change(10, myArray);

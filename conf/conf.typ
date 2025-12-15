@@ -304,7 +304,7 @@
 
       // Оформление элементов содержимого документа
       set ref(supplement: "")
-      set heading(numbering: "1.1", hanging-indent: -indent)
+      set heading(numbering: "1.", hanging-indent: -indent)
       set page(
         footer: context [
           #h(1fr)

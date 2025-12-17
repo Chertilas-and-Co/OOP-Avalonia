@@ -1250,3 +1250,102 @@ public partial class MainWindow : Window
 
 == Индивидуальные задания
 
+По указанию преподавателя выберите индивидуальное задание из нижеприведенного списка. В качестве f(x) использовать по выбору: sh(x), x2, ex. Отредактируйте вид формы и текст программы, в соответствии с полученным заданием.  Приведеную выше программу упростите.
+
+1. 
+$ alpha = cases(
+  (f(x) + y)^2 - sqrt(f(x) times y)\, "   " x times y > 0\;,
+  (f(x) + y)^2 + sqrt(abs(f(x) times y))\, "   " x times y < 0\;,
+  (f(x) + y)^2 + 1\, "   " x times y = 0\;,
+) $
+
+2.
+$ b = cases(
+  ln(f(x)) + (f(x)^2 + y)^3\, "   " x / y > 0\;,
+  ln(abs(f(x) / y)) + (f(x) + y)^3\, "   " x / y < 0\;,
+  (f(x)^2 + y)^3\, "   " x = 0\;,
+  0\, "   " y = 0\;,
+) $
+
+3.
+$ c = cases(
+  f(x)^2 + y^2 + sin(y)\, "   " x - y = 0\;,
+  (f(x) - y)^2 + cos(y)\, "   " x - y > 0\;,
+  (y - f(x))^2 + tg(y)\, "   " x - y < 0\;,
+) $
+
+4.
+$ d = cases(
+  (f(x) - y)^3 + "arctg"(f(x))\, "   " x > y\;,
+  (y - f(x))^3 + "arctg"(f(x))\, "   " y > x\;,
+  (y + f(x))^3 + 0.5\, "   " y = x\;,
+) $
+
+5.
+$ e = cases(
+  i times sqrt(f(x))\, "   " i - "нечётное"\, x > 0\;,
+  i / 2 times sqrt(abs(f(x)))\, "   " i - "чётное"\, x < 0\;,
+  sqrt(abs(i times f(x)))\, "   " "иначе"\;,
+) $
+
+6.
+$ g = cases(
+  e^(f(x) - abs(b))\, "   " 0.5 < x times b < 10\;,
+  sqrt(abs(f(x) + b))\, "   " 0.1 < x times b < 0.5\;,
+  2 times f(x)^2\, "   " "иначе"\;,
+) $
+
+7.
+$ s = cases(
+  e^(f(x))\, "   " 1 < x times b < 10\;,
+  sqrt(abs(f(x) + 4 times b))\, "   " 12 < x times b < 40\;,
+  b times f(x)^2\, "   " "иначе"\;,
+) $
+
+8.
+$ j = cases(
+  sin(5 times f(x) + 3 times m times abs(f(x)))\, "   " -1 < m times x\;,
+  cos(3 times f(x) + 5 times m times abs(f(x)))\, "   " x > m\;,
+  (f(x) + m)^2\, "   " x = m\;,
+) $
+
+9.
+$ l = cases(
+  2 times f(x)^3 + 3 times p^2\, "   " x > abs(p)\;,
+  abs(f(x) - p)\, "   " 3 < x < abs(p)\;,
+  (f(x) - p)^2\, "   " x = abs(p)\;,
+) $
+
+10.
+$ k = cases(
+  ln(abs(f(x)) + abs(q))\, "   " abs(x times q) > 10\;,
+  e^(f(x) + q)\, "   " abs(x times q) < 10\;,
+  f(x) + q\, "   " abs(x times q) = 10\;,
+) $
+
+11.
+$ m = frac(
+  max(f(x)\, y\, z),
+  min(f(x)\, y)
+) + 5 $
+
+12.
+$ n = frac(
+  min(f(x) + y\, y - z),
+  max(f(x)\, y)
+) $
+
+13.
+$ p = frac(
+  abs(min(f(x)\, y) - max(y\, z)),
+  2
+) $
+
+14.
+$ q = frac(
+  max(f(x) + y + z\, x times y times z),
+  min(f(x) + y + z\, x times y times z)
+) $
+
+15.
+$ r = max(min(f(x)\, y)\, z) $

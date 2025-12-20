@@ -307,7 +307,7 @@ namespace MyConsoleApplication {
       int Perimeter2 = myRectangle2.GetPerimeter();
       
       // Выведем имя фигуры и значение периметра
-      Console.WriteLine(myRectangle2.FName); 
+      Console.WriteLine(myRectangle2.Name); 
       Console.WriteLine(Perimeter2);
       Console.ReadKey();
     }
@@ -560,7 +560,7 @@ namespace MyConsoleApplication {
     // Только для чтения 
     public int Perimeter { 
       get {
-        return (FSideA + FSideB) * 2;
+        return (SideA + SideB) * 2;
       }
     }
 

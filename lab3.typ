@@ -600,7 +600,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ConsoleApplication1 {
+namespace MyConsoleApplication {
   class MyClass {
     public int x = 10, y = 5, z = 6;
   }
@@ -651,7 +651,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ConsoleApplication1 {
+namespace MyConsoleApplication {
   class MyClass {
     public int x;
   }
@@ -696,7 +696,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ConsoleApplication1 {
+namespace MyConsoleApplication {
   class ClassA {
     public int a;
 

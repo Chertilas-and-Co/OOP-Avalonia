@@ -452,4 +452,244 @@ canvas.DrawLine(50, 300, 250, 300, capPaint);
 Создайте собственное приложение выводящее рисунок, состоящий из различных объектов (линий, многоугольников, эллипсов, прямоугольников и пр.), не закрашенных и закрашенных полностью. Используйте разные цвета и стили линий (сплошные, штриховые, штрих-пунктирные).
 
 
-= Часть 2. Обработка изображений
+= Часть 2. Обработка изображений в Avalonia + SkiaSharp
+
+== Отображение графических файлов
+
+В Avalonia для отображения изображений используется элемент управления Canvas с ImageBrush в качестве фона. Это позволяет рисовать поверх изображения с помощью SkiaSharp.
+Ключевые компоненты:
+  1. WriteableBitmap — быстрый доступ к пикселям для отображения в UI
+  2. SKBitmap — основное изображение для обработки и рисования  
+  3. SKCanvas — поверхность для рисования поверх изображения
+  4. ImageBrush — отображение WriteableBitmap на Canvas
+
+== Диалоги выбора файлов в Avalonia
+
+StorageProvider — современная замена OpenFileDialog/SaveFileDialog (из WinForm):
+```cs
+// Открытие файла
+var files = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions 
+{ 
+    Title = "Выберите изображение",
+    FileTypeFilter = new[] 
+    { 
+        new FilePickerFileType("Изображения", new[] { "png", "jpg", "jpeg", "bmp", "gif", "webp" })
+    }
+});
+
+if (files.Count > 0)
+{
+    var stream = await files.OpenReadAsync();
+    image.Source = new Bitmap(stream);
+}
+```
+
+Сохранение файла 
+```cs
+var file = await StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions 
+{ 
+    Title = "Сохранить как...",
+    SuggestedFileName = "result.png",
+    FileTypeChoices = new[] 
+    { 
+        new FilePickerFileType("PNG", new[] { "png" }),
+        new FilePickerFileType("JPEG", new[] { "jpg" })
+    }
+});
+
+if (file != null)
+{
+    using var stream = await file.OpenWriteAsync();
+    // сохранение...
+}
+```
+
+== Простой графический редактор
+
+Создайте приложение с функциями:
+- Открытие изображения
+- Рисование поверх кистью мышью
+- Сохранение обработанного изображения
+
+XAML:
+
+```xaml
+ <Grid RowDefinitions="Auto,*" ColumnDefinitions="*,Auto">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
+            <Button Name="OpenButton" Content="Открыть" Click="OpenImage_Click" Margin="5"/>
+            <Button Name="SaveButton" Content="Сохранить" Click="SaveImage_Click" Margin="5"/>
+            <Button Name="GrayscaleButton" Content="Ч/Б" Click="Grayscale_Click" Margin="5"/>
+        </StackPanel>
+        
+        <ScrollViewer Grid.Row="1" Margin="10" 
+                      HorizontalScrollBarVisibility="Auto"
+                      VerticalScrollBarVisibility="Auto"
+                      MinWidth="700" MinHeight="500">
+            <Border BorderBrush="Gray" BorderThickness="1" Background="White">
+                <Canvas Name="ImageCanvas" Background="White" 
+                        PointerPressed="OnMouseDown" 
+                        PointerMoved="OnMouseMove"/>
+            </Border>
+        </ScrollViewer>
+    </Grid>
+```
+
+Основной код редактора:
+```cs
+public partial class MainWindow : Window
+{
+    private Point? previousPoint;      //последняя точка мыши для рисования линии
+    private SKBitmap? skBitmap;        //основное изображение
+    private SKCanvas? skCanvas;        //холст для рисования поверх изображения
+    private SKPaint paint;             //настройки кисти
+    private WriteableBitmap? avaloniaBitmap; //копия для отображения в Avalonia UI
+
+    public MainWindow()
+    {
+        InitializeComponent();
+        paint = new SKPaint //стиль кисти
+        {
+            Color = SKColors.Black,
+            StrokeWidth = 4,
+            IsAntialias = true
+        };
+    }
+
+    private async void OpenImage_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        var files = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions //кросс-платформенное диалоговое окно
+        {
+            Title = "Открыть изображение",
+            AllowMultiple = false,
+            FileTypeFilter = new[]
+            {
+                new FilePickerFileType("Изображения")
+                {
+                    Patterns = new[] { "*.bmp", "*.jpg", "*.jpeg", "*.png", "*.gif", "*.tiff", "*.ico" }
+                }
+            }
+        });
+        if (files.Count > 0)
+        {
+            //декодирование в SkiaSharp
+            using var stream = await files[0].OpenReadAsync();
+            skBitmap = SKBitmap.Decode(stream);
+            
+            if (skBitmap != null)
+            {
+                avaloniaBitmap = new WriteableBitmap(
+                    new PixelSize(skBitmap.Width, skBitmap.Height),
+                    new Vector(96, 96),
+                    Avalonia.Platform.PixelFormat.Bgra8888,
+                    AlphaFormat.Premul);
+                UpdateCanvasImage();
+                skCanvas = new SKCanvas(skBitmap);
+                ImageCanvas.Width = skBitmap.Width;
+                ImageCanvas.Height = skBitmap.Height;
+            }
+        }
+    }
+    private async void SaveImage_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        if (skBitmap == null) return;
+        var file = await StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
+        {
+            Title = "Сохранить как...",
+            DefaultExtension = ".png",
+            FileTypeChoices = new[]
+            {
+                new FilePickerFileType("PNG") { Patterns = new[] { "*.png" } },
+                new FilePickerFileType("JPEG") { Patterns = new[] { "*.jpg" } },
+                new FilePickerFileType("BMP") { Patterns = new[] { "*.bmp" } },
+                new FilePickerFileType("GIF") { Patterns = new[] { "*.gif" } }
+            }
+        });
+        if (file != null)
+        {
+            using var stream = await file.OpenWriteAsync();
+            var format = Path.GetExtension(file.Path.LocalPath).ToLower() switch
+            {
+                ".png" => SKEncodedImageFormat.Png,
+                ".jpg" or ".jpeg" => SKEncodedImageFormat.Jpeg,
+                ".bmp" => SKEncodedImageFormat.Bmp,
+                ".gif" => SKEncodedImageFormat.Gif,
+                _ => SKEncodedImageFormat.Png
+            };
+            skBitmap.Encode(stream, format, 100);
+        }
+    }
+    private void Grayscale_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        if (skBitmap == null) return;
+        for (int x = 0; x < skBitmap.Width; x++)
+        for (int y = 0; y < skBitmap.Height; y++)
+        {
+            var pixel = skBitmap.GetPixel(x, y);
+            var gray = (byte)(0.299 * pixel.Red + 0.587 * pixel.Green + 0.114 * pixel.Blue);
+            skBitmap.SetPixel(x, y, new SKColor(gray, gray, gray));
+        }
+        UpdateCanvasImage();
+    }
+    private void OnMouseDown(object sender, PointerPressedEventArgs e)
+    {
+        var position = e.GetPosition(ImageCanvas);
+        previousPoint = new Point((float)position.X, (float)position.Y);
+    }
+    private void OnMouseMove(object sender, PointerEventArgs e)
+    {
+        if (skCanvas == null || previousPoint == null) return;
+        var pointerPoint = e.GetCurrentPoint(ImageCanvas);
+        if (!pointerPoint.Properties.IsLeftButtonPressed) return;
+        var position = e.GetPosition(ImageCanvas);
+        var point = new Point((float)position.X, (float)position.Y);
+        skCanvas.DrawLine(
+            new SKPoint((float)previousPoint.Value.X, (float)previousPoint.Value.Y),
+            new SKPoint((float)point.X, (float)point.Y), 
+            paint);
+
+        previousPoint = point;
+        UpdateCanvasImage();
+    }
+
+    private void UpdateCanvasImage()
+    {
+        if (skBitmap == null || avaloniaBitmap == null) return;
+        using var locked = avaloniaBitmap.Lock();
+        using var surface = SKSurface.Create(new SKImageInfo(skBitmap.Width, skBitmap.Height, SKColorType.Bgra8888));
+        surface.Canvas.DrawBitmap(skBitmap, 0, 0);
+        surface.Snapshot().ReadPixels(
+            new SKImageInfo(skBitmap.Width, skBitmap.Height, SKColorType.Bgra8888), 
+            locked.Address, 
+            locked.RowBytes);
+        Dispatcher.UIThread.Post(() =>
+        {
+            var imageBrush = new ImageBrush(avaloniaBitmap) { Stretch = Stretch.None };
+            ImageCanvas.Background = imageBrush;
+        });
+    }
+}
+```
+
+== Выполнение индивидуального задания
+
+1) Расширьте приложение путем добавления возможности выбора пользователем цвета и величины кисти.
+
+2) Разработайте функцию, оставляющую на изображении только один из каналов (R,G,B). Канал выбирается пользователем.
+
+3) Создайте функцию, выводящую на изображение окружность. Центр окружности совпадает с центром изображения. Все точки вне окружности закрашиваются черным цветом. Все точки внутри окружности остаются неизменными. Радиус окружности задается пользователем.
+
+4) Создайте функцию, выводящую на изображение треугольник. Все точки вне треугольника закрашиваются синим цветом. Все точки внутри треугольника остаются неизменными. 
+
+5) Создайте функцию, выводящую на изображение ромб. Все точки вне ромба переводятся в градации серого цвета. Все точки внутри ромба закрашиваются зеленым цветом. 
+
+6) Создайте функцию, разбивающую изображение на три равные части. В каждой оставьте значение только одного канала R, G и B.
+
+7) Разработайте функцию, заменяющую все точки синего цвета на точки красного цвета. 
+
+8) Создайте функцию, инвертирующую  изображение в градациях серого цвета в негатив.
+
+9) Создайте функцию, инвертирующую  изображение в негатив.
+
+10) Создайте функцию, изменяющую яркость изображения. Путем прибавления или уменьшения заданной пользователем величины к каждому каналу.
+
+11) Создайте функцию, переводящую изображение в черно-белый формат в соответствии с пороговым значением, которое ввел пользователь.

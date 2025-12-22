@@ -508,47 +508,47 @@ public static bool operator true(MyObject m)
 ```cs
 namespace UnaryOperator {
   // Класс точки на плоскости - пример для перегрузки операторов 
-  class CPoint {
+  class Point {
     int x, y;
-    public CPoint(int x, int y) { 
+    public Point(int x, int y) { 
       this.x = x; 
       this.y = y; }
 
     // Перегрузка инкремента
-    public static CPoint operator ++(CPoint s) { 
+    public static Point operator ++(Point s) { 
       s.x++;
       s.y++; 
       return s; 
     }
 
     // Перегрузка декремента
-    public static CPoint operator --(CPoint s) { 
+    public static Point operator --(Point s) { 
       s.x--;
       s.y--; 
       return s;
     }
 
     // Перегрузка оператора -
-    public static CPoint operator -(CPoint s) {
-      CPoint p = new CPoint(s.x, s.y);
+    public static Point operator -(Point s) {
+      Point p = new Point(s.x, s.y);
       p.x = -p.x; 
       p.y = -p.y; 
       return p;
     }
 
     public override string ToString() {
-      return string.Format("X = {0} Y = {1}", x, y); 
+      return string.Format("X = {0}, Y = {1}", x, y); 
     }
   }
 
   class Program {
     static void Main() {
-      CPoint p = new CPoint(10, 10);
+      Point p = new Point(10, 10);
 
       // Префиксная и постфиксная формы выполняются одинаково
       Console.WriteLine(++p); // x = 11, y = 11
 
-      CPoint p1 = new CPoint(10, 10);
+      Point p1 = new Point(10, 10);
       Console.WriteLine(p1++); // x = 11, y=11
 
       Console.WriteLine(--p); // x = 10, y = 10 
@@ -556,6 +556,111 @@ namespace UnaryOperator {
                               // После выполнения оператора
                               // состояние исходного объекта не изменилось 
       Console.WriteLine(p);   // x = 10, y = 10
+    }
+  }
+}
+```
+
+#figure(
+  image(
+    "lab4_imports/images/example2.png",
+    width: 80%,
+  ),
+  caption: [Результат выполнения программы],
+)
+
+В данном примере `Point` является ссылочным типом, поэтому изменения значений `x` и `y`, которые выполняются в перегруженных операторах инкремента и декремента, затрагивают переданный в них объект. 
+Оператор `-` (изменение знака) не должен изменять состояние переданного объекта, а должен возвращать новый объект с измененным знаком. 
+Для этого в реализации этого метода создается новый объект `Point`, изменяется знак его координат и этот объект возвращается из метода.
+
+В C\# нет возможности выполнить отдельно перегрузку постфиксной и префиксной форм операторов инкремента и декремента.
+Поэтому при вызове постфиксная и префиксная форма работают одинаково.
+
+При перегрузке операторов `true` и `false` разработчик задает критерий истинности для своего типа данных. 
+После этого объекты типа напрямую можно использовать в структуре операторов `if`, `do`, `while`, `for` в качестве условных выражений.
+
+== Перегрузка бинарных операторов
+
+Можно определять в классе следующие бинарные операции:
+`+`, `-`, `*`, `/`, `%`, `&`, `<<`, `>>`, `==`, `!=`, `>`, `<`, `>=`, `<=`.
+
+Синтаксис объявителя бинарной операции:
+
+`тип operator бинарная_операция (параметр1, параметр2)`
+
+Примеры заголовков бинарных операций:
+
+```cs 
+static MyObject operator +(MyObject ml, MyObject m2) 
+static bool operator ==(MyObject ml, MyObject m2)
+```
+
+Хотя бы один параметр, передаваемый в операцию, должен иметь тип класса, для которого она определяется.
+Операция может возвращать величину любого типа.
+
+Операции `==` и `!=`, `>` и `<`, `>=` и `<=` определяются только парами и обычно возвращают логическое значение. 
+Чаще всего в классе определяют операции сравнения на равенство и неравенство для того, чтобы обеспечить сравнение объектов, а не их ссылок, как определено по умолчанию для ссылочных типов.
+
+=== Пример перегрузки бинарных операций
+
+```cs
+namespace BinaryOperator {
+  class Vector {
+    public int x; 
+    public int y;
+
+    public Vector(int x, int y) {
+      this.x = x;
+      this.y = y; 
+    }
+
+    public override string ToString() {
+      return string.Format("Vector: X = {0}, Y = {1}", x, y); 
+    }
+
+  class Point {
+    private int x;
+    private int y;
+
+    public Point(int x, int y) { 
+      this.x = x; 
+      this.y = y; 
+    }
+
+    // Перегрузка бинарного оператора +
+    public static Point operator +(Point p, Vector v) { 
+      return new Point(p.x + v.x, p.y + v.y);
+    }
+
+    // Перегрузка бинарного оператора *
+    public static Point operator *(Point p, int a) { 
+      return new Point(p.x * a, p.y * a); 
+    }
+
+    // Перегрузка бинарного оператора -
+    public static Vector operator -(Point p1, Point p2) {
+      return new Vector(p1.x - p2.x, p1.y - p2.y); 
+    }
+
+    public override string ToString() {
+      return string.Format("Point: X = {0}, Y = {1}", x, y); 
+    }
+  }
+
+  class Program {
+    static void Main() {
+      Point p1 = new Point(10, 10);
+      Point p2 = new Point(12, 20);
+
+      Vector v = new Vector(10, 20);
+
+      Console.WriteLine("Точка p1: {0}", p1);
+      Console.WriteLine("Сдвиг: {0}", p1 + v);
+      Console.WriteLine("Масштабирование: {0}", p1 * 10);
+      Console.WriteLine("Точка p2: {0}", p2);
+      Console.WriteLine("Расстояние: {0}", p2 - p1);
+
+      Console.ReadKey();
     }
   }
 }

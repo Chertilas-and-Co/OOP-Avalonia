@@ -1,15 +1,14 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="test.MainWindow"
-        Title="Лабораторная работа № 1.3"
-        Width="500" Height="420"
+        Title="Табулирование функций"
+        Width="380" Height="420"
         CanResize="False">
 
     <Grid Margin="12">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/> 
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="160"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -21,74 +20,52 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Ввод X -->
+        <!-- X0 -->
         <TextBlock Grid.Row="0" Grid.Column="0"
-                   VerticalAlignment="Center" Margin="0 4"
-                   Text="X =" />
+                   Text="X0 =" VerticalAlignment="Center"
+                   Margin="10 4 0 4"/>
         <TextBox Grid.Row="0" Grid.Column="1"
-                 Name="textBox1" Width="120" Margin="4 4"/>
+                 Name="textBox1" Width="120"
+                 Margin="0 4 160 4"/>
 
-        <!-- Ввод Y -->
+        <!-- Xk -->
         <TextBlock Grid.Row="1" Grid.Column="0"
-                   VerticalAlignment="Center" Margin="0 4"
-                   Text="Y =" />
+                   Text="Xk =" VerticalAlignment="Center"
+                   Margin="10 4 0 4"/>
         <TextBox Grid.Row="1" Grid.Column="1"
-                 Name="textBox2" Width="120" Margin="4 4"/>
+                 Name="textBox2" Width="120"
+                 Margin="0 4 160 4"/>
 
-        <!-- Ввод Z -->
+        <!-- Dx -->
         <TextBlock Grid.Row="2" Grid.Column="0"
-                   VerticalAlignment="Center" Margin="0 4"
-                   Text="Z =" />
+                   Text="Dx =" VerticalAlignment="Center"
+                   Margin="10 4 0 4"/>
         <TextBox Grid.Row="2" Grid.Column="1"
-                 Name="textBox3" Width="120" Margin="4 4"/>
+                 Name="textBox3" Width="120"
+                 Margin="0 4 160 4"/>
 
-
-        <!-- Эмулированный GroupBox -->
-        <Border Grid.Row="0" Grid.Column="2"
-                Grid.RowSpan="3"
-                BorderBrush="Gray" BorderThickness="1"
-                CornerRadius="6"
-                Margin="10 0 0 0" Padding="8">
-
-            <StackPanel>
-                <TextBlock Text="F(x)"
-                           FontWeight="Bold"
-                           Margin="2 0 0 6"/>
-
-                <RadioButton Name="rbSin" Content="sin(x)" IsChecked="True"/>
-                <RadioButton Name="rbCos" Content="cos(x)"/>
-                <RadioButton Name="rbExp" Content="exp(x)"/>
-            </StackPanel>
-
-        </Border>
-
+        <!-- A -->
+        <TextBlock Grid.Row="3" Grid.Column="0"
+                   Text="A =" VerticalAlignment="Center"
+                   Margin="10 4 0 4"/>
+        <TextBox Grid.Row="3" Grid.Column="1"
+                 Name="textBox4" Width="120"
+                 Margin="0 4 160 4"/>
 
         <!-- Поле вывода -->
-        <TextBox Grid.Row="3" Grid.ColumnSpan="3"
-                 Name="textBox4"
+        <TextBox Grid.Row="4" Grid.ColumnSpan="2"
+                 Name="textBox5"
                  AcceptsReturn="True"
                  IsReadOnly="True"
-                 Margin="0 10 0 10"
-                 Height="160"
+                 Margin="0 10"
                  ScrollViewer.VerticalScrollBarVisibility="Visible"/>
 
-
-        <!-- Кнопки -->
-        <StackPanel Grid.Row="5" Grid.ColumnSpan="3"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Center"
-                    Spacing="20" Margin="0 5 0 0">
-
-            <Button Name="btnRun"
-                    Content="ПУСК"
-                    Width="120" Height="36"
-                    Click="OnRunClick"/>
-
-            <Button Name="btnClear"
-                    Content="Очистить"
-                    Width="120" Height="36"
-                    Click="OnClearClick"/>
-        </StackPanel>
-
+        <!-- Кнопка -->
+        <Button Grid.Row="5" Grid.ColumnSpan="2"
+                Content="Вычислить"
+                Width="140" Height="36"
+                HorizontalAlignment="Center"
+                Margin="0 8"
+                Click="OnCalculateClick"/>
     </Grid>
 </Window>

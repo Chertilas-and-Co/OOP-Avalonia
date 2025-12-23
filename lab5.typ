@@ -326,7 +326,7 @@ using(SKPaint paint = new SKPaint())
 
 === Работа с цветом и кистью
 
-*Кисть со случайным цветом*:
+*Кисть со случайным цветом:*
 
 ```cs
 var random = new Random();
@@ -523,7 +523,7 @@ canvas.DrawLine(50, 300, 250, 300, capPaint);
 
 `StorageProvider` --- диалоговое окно для файловой системы.
 
-*Открытие файла*
+*Открытие файла:*
 ```cs
 var files = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions 
 { 
@@ -541,7 +541,7 @@ if (files.Count > 0)
 }
 ```
 
-*Сохранение файла*:
+*Сохранение файла:*
 
 ```cs
 var file = await StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions 
@@ -564,14 +564,14 @@ if (file != null)
 
 == Простой графический редактор
 
-*Задача*:
+*Задача:*
 
 Создать приложение с функциями:
 - открытия изображения;
 - рисования поверх кистью мышью;
 - сохранения обработанного изображения.
 
-*Решение*:
+*Решение:*
 
 XAML:
 

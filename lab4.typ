@@ -1429,7 +1429,7 @@ namespace MyConsoleApplication {
   /// <summary>
   /// Представляет легковые автомобили в базовой комплектации.
   /// </summary>
-  class BaseCar {
+  public class BaseCar {
     protected string mark; // Марка
     protected int year;    // Год выпуска
     protected int cost;    // Базовая стоимость, руб.
@@ -1494,7 +1494,7 @@ namespace MyConsoleApplication {
       double dis = 1 - (DateTime.Today.Year - year) / 85.0;
       return Convert.ToInt32(cost * dis);
     }
-
+  }
 
   /// <summary>
   /// Представляет легковые автомобили с гидроусилителем руля.
@@ -1572,3 +1572,351 @@ namespace MyConsoleApplication {
   ),
   caption: [Работа консольного приложения],
 ) 
+
+Полезным видом классов являются запечатанные (бесплодные) классы, для которых запрещается строить производные классы путём наследования.
+Примером запечатанного класса является класс `String` встроенной библиотеки .NET Framework.
+
+Если требуется использовать функциональность запечатанного класса, то используют не наследование, а включение.
+
+Иногда требуется не запечатывать класс целиком, а просто предотвратить переопределение некоторых виртуальных методов в производных классах. 
+Для этого в заголовке метода указывается ключевое слово `sealed`, и такой метод называется запечатанным виртуальным методом.
+
+=== Пример. Разработка иерархии классов, начиная с абстрактного класса
+
+*Задача*.
+
+Требуется разработать семейство из трёх классов, связанных иерархией наследования и их следующий функционал:
+
+1. Твёрдое тело: плотность материала тела; определить объём; определить массу; определить центральный момент инерции.
+2. Сегмент параболоида вращения: радиус основания, высота.
+3. Усечённый параболоид вращения: радиус малого основания.
+
+
+#figure(
+  image(
+    "lab4_imports/images/figures.png",
+    width: 80%,
+  ),
+  caption: [Параболоиды вращения],
+) 
+
+Создадим в Visual Studio решение Polymorphism, с проектом консольного приложения ConsoleApplication.
+Добавим в решение проект библиотеки классов PolymorphClasses.
+
+Реализуем в библиотеке классов PolymorphClasses следующую иерархию классов:
+1. `RigidBody` ("твёрдое тело") --- абстрактный класс;
+2. `Paraboloid` ("параболоид вращения") --- наследник класса `RigidBody`:
+3. `TruncParab` ("усечённый параболоид вращения") --- наследник класса `Paraboloid`.
+
+Исходный код классов `RigidBody`, `Paraboloid` и `TruncParab` приведён ниже.
+
+```cs
+namespace MyConsoleApplication {
+  /// <summary>
+  /// Представляет твёрдые тела (абстрактный класс)
+  /// </summary>
+  public abstract class RigidBody {
+    protected static int count = 0; // Общее число твёрдых тел
+    protected double density;       // Плотность материала тела, кг/м^3
+
+    /// <summary>
+    /// Конструктор по умолчанию
+    /// </summary>
+    public RigidBody() {
+      density = 1000;
+      count++;
+    }
+
+    /// <summary>
+    /// Параметрический конструктор
+    /// </summary>
+    /// <param name="_d">Плотность материала тела, кг/м^3</param>
+    public RigidBody(double _d) {
+      density = _d;
+      count++;
+    }
+
+    /// <summary>
+    /// Возвращает число твёрдых тел
+    /// </summary>
+    public static int Count {
+      get {
+        return count;
+      }
+    }
+
+    /// <summary>
+    /// Возвращает или устанавливает плотность тела, кг/м^3
+    /// </summary>
+    public double Density {
+      get {
+        return density;
+      }
+      set {
+        if (value <= 0) {
+          throw new Exception("Плотность тела должна быть > 0!");
+        }
+        density = value;
+      }
+    }
+
+    /// <summary>
+    /// Возвращает массу
+    /// </summary>
+    /// <returns>Масса, кг</returns>
+    public abstract double GetMass();
+
+    /// <summary>
+    /// Возвращает центральный момент инерции
+    /// </summary>
+    /// <returns>Центральный момент инерции, кг*м^2</returns>
+    public abstract double GetInertiaMoment();
+  }
+
+  /// <summary>
+  /// Представляет параболоиды вращения, являющиеся твёрдыми телами.
+  /// </summary>
+  public class Paraboloid : RigidBody {
+    protected double radius; // Радиус основания, м
+    protected double height; // Высота, м
+
+    /// <summary>
+    /// Конструктор по умолчанию
+    /// </summary>
+    public Paraboloid()
+      : base() {
+      radius = 1;
+      height = 1;
+    }
+
+    /// <summary>
+    /// Конструктор с параметрами
+    /// </summary>
+    /// <param name="_d">Плотность, кг/м^3</param>
+    /// <param name="_r">Радиус основания, м</param>
+    /// <param name="_h">Высота, м</param>
+    public Paraboloid(double _d, double _r, double _h)
+      : base(_d) {
+
+      radius = _r;
+      height = _h;
+    }
+
+    /// <summary>
+    /// Возвращает или устанавливает радиус, м
+    /// </summary>
+    public virtual double Radius {
+      get { 
+        return radius;
+      }
+      set {
+        if (value <= 0) {
+          throw new Exception("Радиус должен быть > 0!");
+        }
+        radius = value;
+      }
+    }
+
+    /// <summary>
+    /// Возвращает или устанавливает высоту, м
+    /// </summary>
+    public double Height {
+      get {
+        return height; 
+      }
+      set {
+        if (value <= 0) {
+          throw new Exception("Высота должна быть > 0!");
+        }
+        height = value;
+      }
+    }
+
+    /// <summary>
+    /// Возвращает строку с характеристиками объекта
+    /// </summary>
+    /// <returns>Характеристики параболоидa вращения</returns>
+    public override string ToString() {
+      return (string.Format("Характеристики параболоида вращения:\n" +
+                            "- плотность: {0} кг/м^3\n" +
+                            "- радиус основания: {1} м\n" +
+                            "- высота: {2} м", density, radius, height));
+    }
+
+    /// <summary>
+    /// Возвращает объём
+    /// </summary>
+    /// <returns>Объём, м^3</returns>
+    public virtual double GetVolume() {
+      return (Math.PI * radius * radius * height / 2);
+    }
+
+    /// <summary>
+    /// Возвращает массу
+    /// </summary>
+    /// <returns>Масса, кг</returns>
+    public override double GetMass() {
+      return (density * GetVolume());
+    }
+
+    /// <summary>
+    /// Возвращает центральный момент инерции
+    /// </summary>
+    /// <returns>Центральный момент инерции, кг*м^2</returns>
+    public override double GetInertiaMoment() {
+      return (GetMass() * radius * radius / 5);
+    }
+  }
+
+  /// <summary>
+  /// Представляет усечённые параболоиды вращения,
+  /// являющиеся твёрдыми телами (запечатанный класс)
+  /// </summary>
+  public sealed class TruncParabol : Paraboloid {
+    double radiusSmall; // Радиус малого основания, м
+
+    /// <summary>
+    /// Конструктор по умолчанию
+    /// </summary>
+    public TruncParabol()
+      : base() {
+      radiusSmall = Radius / 2;
+    }
+
+    /// <summary>
+    /// Конструктор с параметрами
+    /// </summary>
+    /// <param name="_d">Плотность, кг/м^3</param>
+    /// <param name="_r">Радиус большого основания, м</param>
+    /// <param name="_rs">Радиус малого основания, м</param>
+    /// <param name="_h">Высота, м</param>
+    public TruncParabol(double _d, double _r, double _rs, double _h)
+      : base(_d, _r, _h) {
+
+      radiusSmall = _rs;
+    }
+
+    /// <summary>
+    /// Возвращает или устанавливает радиус большого основания, м
+    /// </summary>
+    public override double Radius {
+      get { 
+        return base.Radius; 
+      }
+      set {
+        if (value > base.Radius) {
+          throw new Exception("Радиус малого основания не должен быть" +
+                              " больше радиуса большого основания!");
+        }
+        base.Radius = value;
+      }
+    }
+
+    /// <summary>
+    /// Возвращает или устанавливает радиус малого основания, м
+    /// </summary>
+    public double RadiusSmall {
+      get {
+        return radiusSmall;
+      }
+      set {
+        if (value <= 0) {
+          throw new Exception("Радиус малого основания должен быть > 0!");
+        }
+        radiusSmall = value;
+      }
+    }
+
+    /// <summary>
+    /// Возвращает строку с характеристиками объекта
+    /// </summary>
+    /// <returns>Характеристики объекта</returns>
+    public override string ToString() {
+      return (base.ToString() +
+              string.Format("\n- радиус малого основания: {0} м", radiusSmall));
+    }
+
+    /// <summary>
+    /// Возвращает объём
+    /// </summary>
+    /// <returns>Объём, м^3</returns>
+    public override double GetVolume() {
+      return (base.GetVolume() +
+              Math.PI * height * radiusSmall * radiusSmall / 2);
+    }
+
+    /// <summary>
+    /// Возвращает массу
+    /// </summary>
+    /// <returns>Масса, кг</returns>
+    public override double GetMass() {
+      return (density * GetVolume());
+    }
+
+    /// <summary>
+    /// Возвращает центральный момент инерции
+    /// </summary>
+    /// <returns>Центральный момент инерции, кг*м^2</returns>
+    public override double GetInertiaMoment() {
+      return (base.GetInertiaMoment() +
+              GetMass() * radiusSmall * radiusSmall / 2);
+    }
+  }
+
+
+  class Program {
+    static void Main() {
+      Console.Title = "Работа с семейством полиморфных классов";
+      Console.WriteLine("*********** Твёрдые тела ***********\n");
+
+      Paraboloid pb1 = new Paraboloid();
+      Console.WriteLine(pb1.ToString());
+
+      string s = "- объём: {0:f2} м3\n" +
+                 "- масса: {1:f2} кг\n" +
+                 "- момент инерции: {2:f2} кг*м2\n";
+
+      Console.WriteLine(s, pb1.GetVolume(), pb1.GetMass(),
+                        pb1.GetInertiaMoment());
+
+      Paraboloid pb2 = new Paraboloid(800, 0.7, 1.2);
+      Console.WriteLine(pb2.ToString());
+      Console.WriteLine(s, pb2.GetVolume(), pb2.GetMass(),
+                        pb2.GetInertiaMoment());
+
+      TruncParabol pb3 = new TruncParabol();
+      Console.WriteLine(pb3.ToString());
+      Console.WriteLine(s, pb3.GetVolume(), pb3.GetMass(),
+                        pb3.GetInertiaMoment());
+
+      // Экземпляру базового класса присваивается ссылка на
+      // экземпляр производного класса
+      Paraboloid pb4 = new TruncParabol(750, 0.6, 0.25, 0.9);
+
+      // Вызов через динамическое связывание методов
+      // экземпляра производного класса
+      Console.WriteLine(pb4.ToString());
+      Console.WriteLine(s, pb4.GetVolume(), pb4.GetMass(),
+                        pb4.GetInertiaMoment());
+
+      Console.WriteLine("Всего твёрдых тел: {0} шт\n", RigidBody.Count);
+
+      // Массив параболоидов вращения
+      Paraboloid[] parabs = new Paraboloid[4];
+      parabs[0] = pb1;
+      parabs[1] = pb2;
+      parabs[2] = pb3;  // Ссылка на объект производного класса
+      parabs[3] = pb4;
+
+      // Цикл для совместного вызова методов экземпляров
+      // базового и производного классов
+      foreach (Paraboloid p in parabs) {
+        Console.WriteLine("Вычисленные характеристики тела:\n" + s,
+                          p.GetVolume(), p.GetMass(), p.GetInertiaMoment());
+      }
+
+      Console.Read();
+    }
+  }
+}
+```

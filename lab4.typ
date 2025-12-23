@@ -74,11 +74,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyConsoleApplication {
-
+namespace MyConsoleApplication
+{
   // Объявление класса
-  public class Rectangle {
-
+  public class Rectangle
+  {
     // Члены класса:
     // Поля.
     private string Name;
@@ -87,7 +87,8 @@ namespace MyConsoleApplication {
     private int[] Side = new int[2];  
 
     // Индексатор с целочисленным параметром (индексом)
-    public int this[int index] {
+    public int this[int index]
+    {
       get {
         return Side[index];
       }
@@ -97,7 +98,8 @@ namespace MyConsoleApplication {
     }
 
      // Конструктор с аргументами
-    public Rectangle(string name, int SideA, int SideB) {
+    public Rectangle(string name, int SideA, int SideB) 
+    {
       Side[0] = SideA;
       Side[1] = SideB;
       Name = name;
@@ -105,24 +107,30 @@ namespace MyConsoleApplication {
     
     // Свойства
     // Только для чтения
-    public int Perimeter {
+    public int Perimeter 
+    {
       get {return (Side[0] + Side[1]) * 2; }
     }
 
     // Для чтения и для записи
-    public string Name {
-      set { 
+    public string Name
+    {
+      set
+      { 
         Name = value;
       }
-      get { 
+      get
+      { 
         return Name; 
       }
     }
   
   }
 
-  class Program {
-    static void Main(string[] args) {     
+  class Program 
+  {
+    static void Main(string[] args) 
+    {     
       // Создание объекта на основе класса Rectangle (Большой прямоугольник со сторонами 5 и 10)
       Rectangle myRectangle = new Rectangle("Большой прямоугольник", 5, 10);
 
@@ -161,10 +169,13 @@ namespace MyConsoleApplication {
 
 ```cs
 // Индексатор, при значении 0 вернём длину стороны а, при 1 - стороны b, при 3 - стороны с
-public string this[string i] {
-  get {
+public string this[string i] 
+{
+  get 
+  {
     // switch - позволяет выбирать продолжение алгоритма из нескольких разделов, в скобках указывается условие выбора 
-    switch (i) {
+    switch (i)
+    {
       // case - ключевое слово, после которого указывается какое либо значение условия выбора при switch
       case "0": return Convert.ToString(this.a); 
       case "1": return Convert.ToString(this.b);
@@ -190,15 +201,21 @@ public string this[string i] {
 Для этого добавим в класс `Shop` индексатор:
 
 ```cs
-public Laptop this[int pos] {
-  get {
-    if (pos >= LaptopArr.Length ||  pos < 0) {
+public Laptop this[int pos] 
+{
+  get 
+  {
+    if (pos >= LaptopArr.Length ||  pos < 0) 
+    {
       throw new IndexOutOfRangeException();
-    } else {
+    } 
+    else 
+    {
       return (Laptop)LaptopArr[pos];
     }
 
-  set { 
+  set 
+  { 
     LaptopArr[pos] = (Laptop)value; 
   }
 }
@@ -223,7 +240,8 @@ sh[2] = new Laptop("LG", 4300);
 И, наконец, вывод на экран данных по каждому объекту `Laptop`, пользуясь синтаксисом массива.
 
 ```cs
-for (int i = 0; i < 3; i++) {
+for (int i = 0; i < 3; i++) 
+{
   Console.WriteLine(sh[i].ToString());
 }
 ```
@@ -233,7 +251,8 @@ for (int i = 0; i < 3; i++) {
 Если это был бы стандартный массив, то это условие описывается иначе:
 
 ```cs
-for (int i = 0; i < sh.Length; i++) {
+for (int i = 0; i < sh.Length; i++)
+{
   ...
 }
 ```
@@ -241,8 +260,10 @@ for (int i = 0; i < sh.Length; i++) {
 Для того, чтобы подобная функциональная возможность появилась и в примере, необходимо добавить в класс `Shop` дополнительное свойство `Length`.
 
 ```cs
-public int Length {
-  get { 
+public int Length
+{
+  get
+  { 
     return LaptopArr.Length; 
   }
 }
@@ -251,57 +272,76 @@ public int Length {
 Общий вид программы:
 
 ```cs
-namespace MyConsoleApplication {
-  public class Laptop {
+namespace MyConsoleApplication 
+{
+  public class Laptop 
+  {
     private string vendor;
     private double price;
 
-    public string Vendor {
-      get { 
+    public string Vendor 
+    {
+      get
+      { 
         return vendor; 
       }
-      set {
+      set 
+      {
         vendor = value;
       }
     }
 
-    public double Price {
-      get { 
+    public double Price 
+    {
+      get 
+      { 
         return price;
       }
-      set { 
+      set
+      { 
         price = value; 
       }
     }
 
-    public Laptop(string v, double p) {
+    public Laptop(string v, double p) 
+    {
       vendor = v; price = p;
     }
 
-    public override string ToString() {
+    public override string ToString() 
+    {
       return vendor + " " + price.ToString();
     }
   }
 
-  public class Shop {
+  public class Shop 
+  {
     private Laptop[] LaptopArr;
-    public Shop(int size) {
+    public Shop(int size) 
+    {
       LaptopArr = new Laptop[size];
     }
 
-    public int Length {
-      get { 
+    public int Length 
+    {
+      get
+      { 
         return LaptopArr.Length; 
       }
     }
 
-    public Laptop this[int pos] {
-      get {
-        if (pos >= LaptopArr.Length || pos < 0) {
+    public Laptop this[int pos] 
+    {
+      get 
+      {
+        if (pos >= LaptopArr.Length || pos < 0)
+        {
           throw new IndexOutOfRangeException();
         }
-        else
+        else 
+        {
             return (Laptop)LaptopArr[pos];
+        }
       }
       set
       {
@@ -310,22 +350,25 @@ namespace MyConsoleApplication {
     }
   }
 
-  public class Program {
-    public static void Main() {
+  public class Program 
+  {
+    public static void Main()
+    {
       Shop sh = new Shop(3);
       sh[0] = new Laptop("Samsung", 5200);
       sh[1] = new Laptop("Asus", 4700);
       sh[2] = new Laptop("LG", 4300);
 
-      try {
-        for (int i = 0; i < sh.Length; i++) {
+      try 
+      {
+        for (int i = 0; i < sh.Length; i++) 
+        {
           Console.WriteLine(sh[i].ToString());
         }
         Console.WriteLine();
       }
 
-      catch (System.NullReferenceException) { 
-      }
+      catch (System.NullReferenceException) {}
     }
   }
 }
@@ -347,43 +390,57 @@ namespace MyConsoleApplication {
 === Пример использования многомерного индексатора
 
 ```cs
-namespace MyConsoleApplication {
-  public class A {
+namespace MyConsoleApplication 
+{
+  public class A
+  {
     private int[,] arr;
 
     private int rows, cols;
-    public int Rows {
-      get { 
+    public int Rows 
+    {
+      get 
+      { 
         return rows; 
       }
     }
-    public int Cols {
-      get {
+    public int Cols 
+    {
+      get
+      {
         return cols; 
       }
     }
 
-    public A(int rows, int cols) {
+    public A(int rows, int cols)
+    {
       this.rows = rows; this.cols = cols;
       arr = new int[rows, cols];
     }
 
-    public int this[int r, int c] {
-      get {
+    public int this[int r, int c]
+    {
+      get 
+      {
         return arr[r, c]; 
       }
-      set {
+      set 
+      {
         arr[r, c] = value; 
       }
     }
   }
 
-  public class Program {
-    static void Main() {
+  public class Program 
+  {
+    static void Main()
+    {
       A obj = new A(2, 3);
 
-      for (int i = 0; i < obj.Rows; i++) {
-        for (int j = 0; j < obj.Cols; j++) {
+      for (int i = 0; i < obj.Rows; i++)
+      {
+        for (int j = 0; j < obj.Cols; j++)
+        {
           obj[i, j] = i + j;
           Console.Write(obj[i, j].ToString());
         }
@@ -506,43 +563,53 @@ public static bool operator true(MyObject m)
 Оператор `++` увеличивает обе координаты на 1, оператор `--` уменьшает, оператор `–` изменяет знак координат на противоположный.
 
 ```cs
-namespace UnaryOperator {
+namespace UnaryOperator 
+{
   // Класс точки на плоскости - пример для перегрузки операторов 
-  class Point {
+  class Point
+  {
     int x, y;
-    public Point(int x, int y) { 
+    public Point(int x, int y)
+    { 
       this.x = x; 
-      this.y = y; }
+      this.y = y; 
+    }
 
     // Перегрузка инкремента
-    public static Point operator ++(Point s) { 
+    public static Point operator ++(Point s)
+    { 
       s.x++;
       s.y++; 
       return s; 
     }
 
     // Перегрузка декремента
-    public static Point operator --(Point s) { 
+    public static Point operator --(Point s) 
+    { 
       s.x--;
       s.y--; 
       return s;
     }
 
     // Перегрузка оператора -
-    public static Point operator -(Point s) {
+    public static Point operator -(Point s)
+    {
       Point p = new Point(s.x, s.y);
       p.x = -p.x; 
       p.y = -p.y; 
       return p;
     }
 
-    public override string ToString() {
+    public override string ToString() 
+    {
       return string.Format("X = {0}, Y = {1}", x, y); 
     }
   }
 
-  class Program {
-    static void Main() {
+  class Program
+  {
+    static void Main()
+    {
       Point p = new Point(10, 10);
 
       // Префиксная и постфиксная формы выполняются одинаково
@@ -604,51 +671,63 @@ static bool operator ==(MyObject ml, MyObject m2)
 === Пример перегрузки бинарных операций
 
 ```cs
-namespace BinaryOperator {
-  class Vector {
+namespace BinaryOperator 
+{
+  class Vector
+  {
     public int x; 
     public int y;
 
-    public Vector(int x, int y) {
+    public Vector(int x, int y)
+    {
       this.x = x;
       this.y = y; 
     }
 
-    public override string ToString() {
+    public override string ToString() 
+    {
       return string.Format("Vector: X = {0}, Y = {1}", x, y); 
     }
 
-  class Point {
+  class Point
+  {
     private int x;
     private int y;
 
-    public Point(int x, int y) { 
+    public Point(int x, int y)
+    { 
       this.x = x; 
       this.y = y; 
     }
 
     // Перегрузка бинарного оператора +
-    public static Point operator +(Point p, Vector v) { 
+    public static Point operator +(Point p, Vector v) 
+    { 
       return new Point(p.x + v.x, p.y + v.y);
     }
 
     // Перегрузка бинарного оператора *
-    public static Point operator *(Point p, int a) { 
+    public static Point operator *(Point p, int a)
+    { 
       return new Point(p.x * a, p.y * a); 
     }
 
     // Перегрузка бинарного оператора -
-    public static Vector operator -(Point p1, Point p2) {
+    public static Vector operator -(Point p1, Point p2) 
+    {
       return new Vector(p1.x - p2.x, p1.y - p2.y); 
     }
 
-    public override string ToString() {
+    public override string ToString()
+    {
       return string.Format("Point: X = {0}, Y = {1}", x, y); 
     }
   }
 
-  class Program {
-    static void Main() {
+  class Program
+  {
+    static void Main() 
+    {
       Point p1 = new Point(10, 10);
       Point p2 = new Point(12, 20);
 
@@ -686,7 +765,8 @@ namespace BinaryOperator {
 Для исправления этой ошибки следует перегрузить оператор `*` с другим порядком операндов:
 
 ```cs
-public static Point operator *(int a, CPoint p) {
+public static Point operator *(int a, Point p)
+{
   return p * a; 
 }
 ```
@@ -714,25 +794,32 @@ public bool virtual Equals(Object obj)
 === Пример использования операторов `ReferenceEquals()` и `Equals()` со ссылочными и значимыми типами:
 
 ```cs
-namespace Equals_and_ReferenceEquals {
-  class CPoint {
+namespace Equals_and_ReferenceEquals
+{
+  class CPoint 
+  {
     private int x, y;
-    public CPoint(int x, int y) {
+    public CPoint(int x, int y) 
+    {
       this.x = x; 
       this.y = y; 
     }
   }
 
-  struct SPoint {
+  struct SPoint 
+  {
     private int x, y;
-    public SPoint(int x, int y) {
+    public SPoint(int x, int y) 
+    {
       this.x = x; 
       this.y = y;
     }
   }
 
-  class Program {
-    static void Main() {
+  class Program
+  {
+    static void Main() 
+    {
       // Работа метода ReferenceEquals с ссылочным и значимым типами
 
       // Ссылочный тип
@@ -797,26 +884,32 @@ namespace Equals_and_ReferenceEquals {
 === Пример перегрузки операторов `==` и `!=` для класса `Point` 
 
 ```cs 
-namespace ComparisonOperator {
-  class Point {
+namespace ComparisonOperator 
+{
+  class Point
+  {
     int x, y;
 
-    public Point(int x, int y) { 
+    public Point(int x, int y)
+    { 
       this.x = x;
       this.y = y;
     }
 
     // Перегрузка метода Equals
-    public override bool Equals(object obj) {
+    public override bool Equals(object obj) 
+    {
       // Если obj == null,
       // Значит он не равен объекту, от имени которого вызывается этот метод
-      if (obj == null) {
+      if (obj == null)
+      {
         return false;
       } 
 
       Point p = obj as Point;
       // Переданный объект не является ссылкой на Point 
-      if (p == null) {
+      if (p == null) 
+      {
         return false;
       }
 
@@ -825,33 +918,40 @@ namespace ComparisonOperator {
     }
 
     //При перегрузке Equals надо также перегрузить GetHashCode()
-    public override int GetHashCode() {
+    public override int GetHashCode() 
+    {
       return x ^ y; // использование XOR для получения хеш-кода
     }
 
-    public static bool operator ==(Point p1, Point p2) {
+    public static bool operator ==(Point p1, Point p2)
+    {
       // Проверка, что переменные ссылаются на один и тот же адрес
       // Сравнение p1 == p2 приведет к бесконечной рекурсии 
-      if (ReferenceEquals(p1, p2)) {
+      if (ReferenceEquals(p1, p2)) 
+      {
         return true;
       } 
 
       // Приведение к object необходимо,
       // т.к. сравнение p1 == null приведет к бесконечной рекурсии 
-      if ((object)p1 == null) {
+      if ((object)p1 == null)
+      {
         return false;
       }
 
       return p1.Equals(p2);
     }
 
-    public static bool operator !=(Point p1, Point p2) {
+    public static bool operator !=(Point p1, Point p2) 
+    {
       return (!(p1 == p2)); 
     }
   }
 
-  class Program {
-    static void Main() {
+  class Program 
+  {
+    static void Main()
+    {
       Point cp = new Point(0, 0);
       Point cp1 = new Point(0, 0);
       Point cp2 = new Point(1, 1);
@@ -1007,7 +1107,8 @@ explicit operator тип ( параметр ) // Явное преобразов
 При описании класса имя его базового класса записывается в заголовке класса после двоеточия (если имя предка не указано, предком считается базовый класс всей иерархии `System.Object`):
 
 ```cs
-[уровень доступа] class <имя производного класса>:<имя базового класса> {
+[уровень доступа] class <имя производного класса>:<имя базового класса>
+{
   // Описание членов класса
 }
 ```
@@ -1049,9 +1150,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyConsoleApplication {
+namespace MyConsoleApplication
+{
   // Объявление класса "Фигура"
-  public class Shape {
+  public class Shape 
+  {
     // Члены класса:
     // Поля
     protected string Name;
@@ -1059,7 +1162,8 @@ namespace MyConsoleApplication {
     protected int SideB;
     
     // Конструкторы
-    public Shape(string name, int sideA, int sideB) {
+    public Shape(string name, int sideA, int sideB)
+    {
       SideA = sideA; 
       SideB = sideB;
       Name = name;
@@ -1067,17 +1171,21 @@ namespace MyConsoleApplication {
 
     // Свойства
     // Наименование фигуры
-    public string Name {
-      set {
+    public string Name 
+    {
+      set
+      {
         Name = value + " (неопределенная фигура)"; 
       }
-      get {
+      get 
+      {
         return Name; 
       }
     }
   }
 
-  public class Rectangle : Shape {
+  public class Rectangle : Shape
+  {
     // Члены класса:
 
     // Конструкторы
@@ -1085,25 +1193,32 @@ namespace MyConsoleApplication {
 
     // Свойства
     // Свойство, дополняющее элементы базового класса  
-    public int Perimeter {
-      get { 
+    public int Perimeter
+    {
+      get
+      { 
         return (SideA + SideB) * 2; 
       }
     }
     // Свойства
     // Свойство, заменяющее элемент базового класса  
-    new public string Name { 
-      set { 
+    new public string Name 
+    { 
+      set 
+      { 
         Name = value + " (прямоугольник)"; 
       }
-      get { 
+      get
+      { 
         return Name;
       }
     }
   }
 
-  class Program {
-    static void Main() {
+  class Program 
+  {
+    static void Main() 
+    {
       // Создание объекта на основе класса Rectangle (Большой прямоугольник со сторонами 5 и 10)
       Rectangle myRectangle = new Rectangle("Большой прямоугольник", 5, 10);
 
@@ -1137,59 +1252,74 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyConsoleApplication {
+namespace MyConsoleApplication
+{
   // Объявление класса "Фигура"
-  public class Shape {
+  public class Shape 
+  {
     // Члены класса:
     // Поля
     protected string Name;
 
-    public Shape() {
+    public Shape()
+    {
       Name = "Неопределенная фигура";
     }
 
     // Наименование фигуры
-    public string Name {
-      get { 
+    public string Name
+    {
+      get
+      { 
         return Name + " (неопределенная фигура)"; 
       }
     }
   }
 
-  public class Rectangle : Shape {
+  public class Rectangle : Shape
+  {
     // Члены класса:
     // Конструкторы
-    public Rectangle() {
+    public Rectangle()
+    {
       Name = "Прямоугольник";
     }
      
     // Свойство, заменяющее элемент базового класса
-    new public string Name {
-      get { 
+    new public string Name 
+    {
+      get 
+      { 
         return Name; 
       }
     }
   }
 
 
-  public class Circle : Shape {
+  public class Circle : Shape
+  {
     // Члены класса:
     // Конструкторы
-    public Circle() {
+    public Circle() 
+    {
       Name = "Окружность";
     }
 
     // Свойство, заменяющее элемент базового класса  
-    new public string Name  {
-      get { 
+    new public string Name 
+    {
+      get
+      { 
         return Name; 
       }
     }
   }
 
 
-  class Program {
-    static void Main() {
+  class Program
+  {
+    static void Main() 
+    {
       // Создание объектов базового класса 
       // на основе производных класcов 
       Shape myShape1 = new Rectangle();
@@ -1212,7 +1342,8 @@ namespace MyConsoleApplication {
       MyShape[1] = new Circle();
       MyShape[2] = new Shape();
 
-      foreach (Shape elem in MyShape) {
+      foreach (Shape elem in MyShape)
+      {
         Console.WriteLine(elem.Name);
       }
       Console.ReadKey();
@@ -1261,63 +1392,79 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyConsoleApplication {
+namespace MyConsoleApplication 
+{
   // Объявление класса "Фигура"
-  public class Shape {
+  public class Shape
+  {
     // Члены класса
     // Поля.
     protected string Name;
 
-    public Shape() {
+    public Shape() 
+    {
       Name = "Неопределенная фигура";
     }
 
     // Наименование фигуры
-    virtual public string Name  {
-      get {
+    virtual public string Name 
+    {
+      get
+      {
         return Name + " (неопределенная фигура)";
       }
     }
   }
 
-  public class Rectangle : Shape {
+  public class Rectangle : Shape 
+  {
     // Члены класса
     // Конструкторы
-    public Rectangle() {
+    public Rectangle() 
+    {
       Name = "Прямоугольник";
     }
 
     // свойство, заменяющее элемент базового класса  
-    override public string Name {
-      get { 
+    override public string Name 
+    {
+      get 
+      { 
         return Name; 
       }
     }
   }
 
 
-  public class Circle : Shape {
+  public class Circle : Shape
+  {
     // Члены класса
     // Конструкторы
-    public Circle() {
+    public Circle() 
+    {
       Name = "Окружность";
     }
 
     // Свойство, заменяющее элемент базового класса  
-    override public string Name {
-      get { 
+    override public string Name 
+    {
+      get 
+      { 
         return Name;
       }
     }
   }
 
-  class Program {
-    static void Main() {
+  class Program 
+  {
+    static void Main()
+    {
       Shape[] MyShape = new Shape[3];
       MyShape[0] = new Rectangle();
       MyShape[1] = new Circle();
       MyShape[2] = new Shape();
-      foreach (Shape elem in MyShape) {
+      foreach (Shape elem in MyShape) 
+      {
         Console.WriteLine(elem.Name);
       }
       Console.ReadKey();
@@ -1364,7 +1511,8 @@ namespace MyConsoleApplication {
 Объявление абстрактных классов и абстрактных методов должно сопровождаться модификатором `abstract`.
 
 ```cs
-public abstract class Shape { 
+public abstract class Shape 
+{ 
   // ...
   public abstract void Draw();
   // ...
@@ -1401,7 +1549,8 @@ public abstract class Shape {
 Переопределить метод `ToString()` можно при помощи следующего объявления метода:
 
 ```cs
-public override string ToString() {
+public override string ToString()
+{
   // ...
 }
 ```
@@ -1425,11 +1574,13 @@ public override string ToString() {
 Исходный код указанных классов представлен в листингах ниже. В коде использовались комментарии к XML-документации (смотрите Приложение 1 к лабораторной работе).
 
 ```cs
-namespace MyConsoleApplication {
+namespace MyConsoleApplication 
+{
   /// <summary>
   /// Представляет легковые автомобили в базовой комплектации.
   /// </summary>
-  public class BaseCar {
+  public class BaseCar 
+  {
     protected string mark; // Марка
     protected int year;    // Год выпуска
     protected int cost;    // Базовая стоимость, руб.
@@ -1437,7 +1588,8 @@ namespace MyConsoleApplication {
     /// <summary>
     /// Конструктор по умолчанию.
     /// </summary>
-    public BaseCar() {
+    public BaseCar()
+    {
       mark = "Daewoo Nexia";
       year = 2014;
       cost = 209000;
@@ -1449,7 +1601,8 @@ namespace MyConsoleApplication {
     /// <param name="mark">Марка</param>
     /// <param name="year">Год выпуска</param>
     /// <param name="cost">Стоимость, руб.</param>
-    public BaseCar(string mark, int year, int cost) {
+    public BaseCar(string mark, int year, int cost)
+    {
       this.mark = mark;
       this.year = year;
       this.cost = cost;
@@ -1460,7 +1613,8 @@ namespace MyConsoleApplication {
     /// </summary>
     /// <param name="obj">Объект</param>
     /// <returns>Результат сравнения</returns>
-    public override bool Equals(object obj) {
+    public override bool Equals(object obj) 
+    {
       return base.Equals(obj);
     }
 
@@ -1468,7 +1622,8 @@ namespace MyConsoleApplication {
     /// Возвращает хеш-код экземпляра класса BaseCar.
     /// </summary>
     /// <returns>Хеш-код объекта</returns>
-    public override int GetHashCode() {
+    public override int GetHashCode()
+    {
       return base.GetHashCode();
     }
 
@@ -1476,7 +1631,8 @@ namespace MyConsoleApplication {
     /// Возвращает строку с данными об автомобиле.
     /// </summary>
     /// <returns>Строка с данными об автомобиле</returns>
-    public override string ToString() {
+    public override string ToString() 
+    {
       return string.Format(
         "Автомобиль: {0}\n" +
         "Год выпуска: {1}\n" +
@@ -1489,7 +1645,8 @@ namespace MyConsoleApplication {
     /// Определяет стоимость в зависимости от года выпуска.
     /// </summary>
     /// <returns>Стоимость, руб.</returns>
-    public virtual int GetCost() {
+    public virtual int GetCost()
+    {
       // Степень уценки в зависимости от года выпуска
       double dis = 1 - (DateTime.Today.Year - year) / 85.0;
       return Convert.ToInt32(cost * dis);
@@ -1499,14 +1656,16 @@ namespace MyConsoleApplication {
   /// <summary>
   /// Представляет легковые автомобили с гидроусилителем руля.
   /// </summary>
-  public class ForcedCar : BaseCar {
+  public class ForcedCar : BaseCar
+  {
     int cost1; // Стоимость гидроусилителя
     int cost2; // Стоимость монтажа
 
     /// <summary>
     /// Конструктор по умолчанию.
     /// </summary>
-    public ForcedCar() : base() {
+    public ForcedCar() : base()
+    {
       cost1 = 7000;
       cost2 = 3000;
     }
@@ -1520,7 +1679,8 @@ namespace MyConsoleApplication {
     /// <param name="cost1">Стоимость гидроусилителя, руб.</param>
     /// <param name="cost2">Стоимость монтажа, руб.</param>
     public ForcedCar(string mark, int year, int cost, int cost1, int cost2)
-      : base(mark, year, cost) {
+      : base(mark, year, cost)
+    {
       this.cost1 = cost1;
       this.cost2 = cost2;
     }
@@ -1529,14 +1689,17 @@ namespace MyConsoleApplication {
     /// Возвращает полную стоимость.
     /// </summary>
     /// <returns>Полную стоимость, руб.</returns>
-    public override int GetCost() {
+    public override int GetCost()
+    {
       return base.GetCost() + cost1 + cost2;
     }
   }
 
 
-  class Program {
-    static void Main() {
+  class Program 
+  {
+    static void Main() 
+    {
       Console.Title = "Работа с виртуальными методами";
 
       BaseCar car1 = new BaseCar();
@@ -1546,7 +1709,8 @@ namespace MyConsoleApplication {
 
       BaseCar[] cars = new BaseCar[] { car1, car2, car3, car4 };
 
-      foreach (BaseCar car in cars) {
+      foreach (BaseCar car in cars) 
+      {
         Console.WriteLine("Идентификатор: {0}", car.GetHashCode());
         Console.WriteLine(car.ToString());
         Console.WriteLine("Полная стоимость: {0} руб.\n", car.GetCost());
@@ -1619,18 +1783,21 @@ namespace MyConsoleApplication {
 Исходный код классов `RigidBody`, `Paraboloid` и `TruncParab` приведён ниже.
 
 ```cs
-namespace MyConsoleApplication {
+namespace MyConsoleApplication 
+{
   /// <summary>
   /// Представляет твёрдые тела (абстрактный класс)
   /// </summary>
-  public abstract class RigidBody {
+  public abstract class RigidBody 
+  {
     protected static int count = 0; // Общее число твёрдых тел
     protected double density;       // Плотность материала тела, кг/м^3
 
     /// <summary>
     /// Конструктор по умолчанию
     /// </summary>
-    public RigidBody() {
+    public RigidBody() 
+    {
       density = 1000;
       count++;
     }
@@ -1639,7 +1806,8 @@ namespace MyConsoleApplication {
     /// Параметрический конструктор
     /// </summary>
     /// <param name="_d">Плотность материала тела, кг/м^3</param>
-    public RigidBody(double _d) {
+    public RigidBody(double _d) 
+    {
       density = _d;
       count++;
     }
@@ -1647,8 +1815,10 @@ namespace MyConsoleApplication {
     /// <summary>
     /// Возвращает число твёрдых тел
     /// </summary>
-    public static int Count {
-      get {
+    public static int Count
+    {
+      get
+      {
         return count;
       }
     }
@@ -1656,12 +1826,16 @@ namespace MyConsoleApplication {
     /// <summary>
     /// Возвращает или устанавливает плотность тела, кг/м^3
     /// </summary>
-    public double Density {
-      get {
+    public double Density
+    {
+      get 
+      {
         return density;
       }
-      set {
-        if (value <= 0) {
+      set 
+      {
+        if (value <= 0) 
+        {
           throw new Exception("Плотность тела должна быть > 0!");
         }
         density = value;
@@ -1684,15 +1858,16 @@ namespace MyConsoleApplication {
   /// <summary>
   /// Представляет параболоиды вращения, являющиеся твёрдыми телами.
   /// </summary>
-  public class Paraboloid : RigidBody {
+  public class Paraboloid : RigidBody 
+  {
     protected double radius; // Радиус основания, м
     protected double height; // Высота, м
 
     /// <summary>
     /// Конструктор по умолчанию
     /// </summary>
-    public Paraboloid()
-      : base() {
+    public Paraboloid() : base() 
+    {
       radius = 1;
       height = 1;
     }
@@ -1703,8 +1878,8 @@ namespace MyConsoleApplication {
     /// <param name="_d">Плотность, кг/м^3</param>
     /// <param name="_r">Радиус основания, м</param>
     /// <param name="_h">Высота, м</param>
-    public Paraboloid(double _d, double _r, double _h)
-      : base(_d) {
+    public Paraboloid(double _d, double _r, double _h) : base(_d) 
+    {
 
       radius = _r;
       height = _h;
@@ -1713,11 +1888,16 @@ namespace MyConsoleApplication {
     /// <summary>
     /// Возвращает или устанавливает радиус, м
     /// </summary>
-    public virtual double Radius {
-      get { 
+    public virtual double Radius
+    {
+      get 
+      { 
         return radius;
       }
-      set {
+      set
+      {
+        if (value <= 0)
+        {
           throw new Exception("Радиус должен быть > 0!");
         }
         radius = value;
@@ -1727,12 +1907,16 @@ namespace MyConsoleApplication {
     /// <summary>
     /// Возвращает или устанавливает высоту, м
     /// </summary>
-    public double Height {
-      get {
+    public double Height
+    {
+      get
+      {
         return height; 
       }
-      set {
-        if (value <= 0) {
+      set 
+      {
+        if (value <= 0)
+        {
           throw new Exception("Высота должна быть > 0!");
         }
         height = value;
@@ -1743,7 +1927,8 @@ namespace MyConsoleApplication {
     /// Возвращает строку с характеристиками объекта
     /// </summary>
     /// <returns>Характеристики параболоидa вращения</returns>
-    public override string ToString() {
+    public override string ToString()
+    {
       return (string.Format("Характеристики параболоида вращения:\n" +
                             "- плотность: {0} кг/м^3\n" +
                             "- радиус основания: {1} м\n" +
@@ -1754,7 +1939,8 @@ namespace MyConsoleApplication {
     /// Возвращает объём
     /// </summary>
     /// <returns>Объём, м^3</returns>
-    public virtual double GetVolume() {
+    public virtual double GetVolume()
+    {
       return (Math.PI * radius * radius * height / 2);
     }
 
@@ -1762,7 +1948,8 @@ namespace MyConsoleApplication {
     /// Возвращает массу
     /// </summary>
     /// <returns>Масса, кг</returns>
-    public override double GetMass() {
+    public override double GetMass()
+    {
       return (density * GetVolume());
     }
 
@@ -1770,7 +1957,8 @@ namespace MyConsoleApplication {
     /// Возвращает центральный момент инерции
     /// </summary>
     /// <returns>Центральный момент инерции, кг*м^2</returns>
-    public override double GetInertiaMoment() {
+    public override double GetInertiaMoment() 
+    {
       return (GetMass() * radius * radius / 5);
     }
   }
@@ -1779,14 +1967,15 @@ namespace MyConsoleApplication {
   /// Представляет усечённые параболоиды вращения,
   /// являющиеся твёрдыми телами (запечатанный класс)
   /// </summary>
-  public sealed class TruncParabol : Paraboloid {
+  public sealed class TruncParabol : Paraboloid 
+  {
     double radiusSmall; // Радиус малого основания, м
 
     /// <summary>
     /// Конструктор по умолчанию
     /// </summary>
-    public TruncParabol()
-      : base() {
+    public TruncParabol() : base()
+    {
       radiusSmall = Radius / 2;
     }
 
@@ -1797,21 +1986,24 @@ namespace MyConsoleApplication {
     /// <param name="_r">Радиус большого основания, м</param>
     /// <param name="_rs">Радиус малого основания, м</param>
     /// <param name="_h">Высота, м</param>
-    public TruncParabol(double _d, double _r, double _rs, double _h)
-      : base(_d, _r, _h) {
-
+    public TruncParabol(double _d, double _r, double _rs, double _h) : base(_d, _r, _h)
+    {
       radiusSmall = _rs;
     }
 
     /// <summary>
     /// Возвращает или устанавливает радиус большого основания, м
     /// </summary>
-    public override double Radius {
-      get { 
+    public override double Radius 
+    {
+      get
+      { 
         return base.Radius; 
       }
-      set {
-        if (value > base.Radius) {
+      set 
+      {
+        if (value > base.Radius)
+        {
           throw new Exception("Радиус малого основания не должен быть" +
                               " больше радиуса большого основания!");
         }
@@ -1822,12 +2014,15 @@ namespace MyConsoleApplication {
     /// <summary>
     /// Возвращает или устанавливает радиус малого основания, м
     /// </summary>
-    public double RadiusSmall {
-      get {
+    public double RadiusSmall 
+    {
+      get 
+      {
         return radiusSmall;
       }
       set {
-        if (value <= 0) {
+        if (value <= 0) 
+        {
           throw new Exception("Радиус малого основания должен быть > 0!");
         }
         radiusSmall = value;
@@ -1838,7 +2033,8 @@ namespace MyConsoleApplication {
     /// Возвращает строку с характеристиками объекта
     /// </summary>
     /// <returns>Характеристики объекта</returns>
-    public override string ToString() {
+    public override string ToString() 
+    {
       return (base.ToString() +
               string.Format("\n- радиус малого основания: {0} м", radiusSmall));
     }
@@ -1847,7 +2043,8 @@ namespace MyConsoleApplication {
     /// Возвращает объём
     /// </summary>
     /// <returns>Объём, м^3</returns>
-    public override double GetVolume() {
+    public override double GetVolume()
+    {
       return (base.GetVolume() +
               Math.PI * height * radiusSmall * radiusSmall / 2);
     }
@@ -1856,7 +2053,8 @@ namespace MyConsoleApplication {
     /// Возвращает массу
     /// </summary>
     /// <returns>Масса, кг</returns>
-    public override double GetMass() {
+    public override double GetMass()
+    {
       return (density * GetVolume());
     }
 
@@ -1864,15 +2062,18 @@ namespace MyConsoleApplication {
     /// Возвращает центральный момент инерции
     /// </summary>
     /// <returns>Центральный момент инерции, кг*м^2</returns>
-    public override double GetInertiaMoment() {
+    public override double GetInertiaMoment() 
+    {
       return (base.GetInertiaMoment() +
               GetMass() * radiusSmall * radiusSmall / 2);
     }
   }
 
 
-  class Program {
-    static void Main() {
+  class Program
+  {
+    static void Main()
+    {
       Console.Title = "Работа с семейством полиморфных классов";
       Console.WriteLine("*********** Твёрдые тела ***********\n");
 
@@ -1917,7 +2118,8 @@ namespace MyConsoleApplication {
 
       // Цикл для совместного вызова методов экземпляров
       // базового и производного классов
-      foreach (Paraboloid p in parabs) {
+      foreach (Paraboloid p in parabs)
+      {
         Console.WriteLine("Вычисленные характеристики тела:\n" + s,
                           p.GetVolume(), p.GetMass(), p.GetInertiaMoment());
       }
@@ -2073,8 +2275,9 @@ public static class StringExtension
     int counter = 0;
     for (int i = 0; i < str.Length; i++)
     {
-      if (str[i] == c)
+      if (str[i] == c) {
         counter++;
+      }
     }
     return counter;
   }

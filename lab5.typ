@@ -29,27 +29,74 @@
 
 = Подготовка к работе
 
-Установка NuGet-пакетов
+Для начала работы потребуется установить несколько NuGet-пакетов:
 
-1. Avalonia.Ski. Осторожно! Так как может быть конфликт с версией самой Avalonia. В файле `.csproj` можно узнать её, чтобы не допустить конфликта. Все пакеты Avalonia в проекте должны иметь строго одинаковую версию.
+1. Avalonia.Ski;
+2. SkiaSharp;
+3. SkiaSharp.NativeAssets.
+
+== Установка в Visual Studio (только для Windows):
+
+Приведённые ниже действия и скриншоты были выполнены на Visual Studio 2026, но с лёгкостью могут быть воспроизведены на любой другой современной версии Visual Studio.
+
+Во вкладке "Проект" навигационной панели выберите "Управление пакетами NuGet..."
+
+#figure(
+  image(
+    "lab5_imports/images/NuGet.png",
+    width: 80%,
+  ),
+)
+
+После этого во вкладке "Обзор" напишите в поле поиска необходимые пакеты и установите их.
+
+#figure(
+  image(
+    "lab5_imports/images/AvaloniaSki.png",
+    width: 80%
+  )
+)
+
+Для разных систем вы должны установить разную версию SkiaSharp.NativeAssets.
+
+- Windows: SkiaSharp.NativeAssets.Win32;
+- Linux: SkiaSharp.NativeAssets.Linux; 
+- MacOS: SkiaSharp.NativeAssets.macOS.  
+
+#figure(
+  image(
+    "lab5_imports/images/SkiaSharp.png",
+    width: 80%
+  )
+)
+
+== Bash (любые системы)
+
+Будьте осторожны! 
+Может возникнуть конфликт с версией самой Avalonia.
+В файле .csproj можно узнать её, чтобы не допустить конфликта. 
+Все пакеты Avalonia в проекте должны иметь строго одинаковую версию.
+
+Установите AvaloniaSki с помощью команды:
+
 `dotnet add package Avalonia.Skia --version 11.3.9` 
 
+Затем SkiaSharp:
 
-2. SkiaSharp. Непосредственно библиотека, с которой будем работать 
 `dotnet add package SkiaSharp --version 3.119.1` 
 
-3. В зависимости от вашей системы установите один из следующих пакетов:
+ В зависимости от вашей системы установите один из следующих пакетов:
 - Windows: `dotnet add SkiaSharp.NativeAssets.Win32`;
 - Linux: `dotnet add package SkiaSharp.NativeAssets.Linux`; 
 - MacOS: `dotnet add package SkiaSharp.NativeAssets.macOS`.  
 
-Чтобы проверить, что всё добавилось в проект, убедитесь, что в .csproj есть следующие строки
+Чтобы проверить, что всё корректно добавилось в проект, убедитесь, что в .csproj есть следующие строки:
+
 ```xaml
     <PackageReference Include="SkiaSharp" Version="3.119.1" />
     <PackageReference Include="SkiaSharp.NativeAssets.Win32" Version="3.119.1" /> // может отличаться в зависимости от вашей системы
     <PackageReference Include="Avalonia.Skia" Version="11.3.6"/>
 ```
-
 
 = Часть 1. Программирование графики
 

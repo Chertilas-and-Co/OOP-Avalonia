@@ -55,42 +55,42 @@
 #figure(
   image(
     "lab5_imports/images/AvaloniaSki.png",
-    width: 80%
-  )
+    width: 80%,
+  ),
 )
 
 Для каждой системы требуется установка соответствующей версии пакета SkiaSharp.NativeAssets.
 
 - Windows: SkiaSharp.NativeAssets.Win32;
-- Linux: SkiaSharp.NativeAssets.Linux; 
-- MacOS: SkiaSharp.NativeAssets.macOS.  
+- Linux: SkiaSharp.NativeAssets.Linux;
+- MacOS: SkiaSharp.NativeAssets.macOS.
 
 #figure(
   image(
     "lab5_imports/images/SkiaSharp.png",
-    width: 80%
-  )
+    width: 80%,
+  ),
 )
 
 == Bash (любые системы)
 
-Будьте осторожны! 
+Будьте осторожны!
 Может возникнуть конфликт с версией самой Avalonia.
-В файле .csproj можно узнать её, чтобы не допустить конфликта. 
+В файле .csproj можно узнать её, чтобы не допустить конфликта.
 Все пакеты Avalonia в проекте должны иметь строго одинаковую версию.
 
 Установите AvaloniaSkia с помощью команды:
 
-`dotnet add package Avalonia.Skia --version 11.3.9` 
+`dotnet add package Avalonia.Skia --version 11.3.9`
 
 Затем SkiaSharp:
 
-`dotnet add package SkiaSharp --version 3.119.1` 
+`dotnet add package SkiaSharp --version 3.119.1`
 
- В зависимости от вашей системы установите один из следующих пакетов:
+В зависимости от вашей системы установите один из следующих пакетов:
 - Windows: `dotnet add SkiaSharp.NativeAssets.Win32`;
-- Linux: `dotnet add package SkiaSharp.NativeAssets.Linux`; 
-- MacOS: `dotnet add package SkiaSharp.NativeAssets.macOS`.  
+- Linux: `dotnet add package SkiaSharp.NativeAssets.Linux`;
+- MacOS: `dotnet add package SkiaSharp.NativeAssets.macOS`.
 
 Чтобы проверить, что всё корректно добавилось в проект, убедитесь, что в .csproj есть следующие строки:
 
@@ -104,7 +104,7 @@
 
 == WM_PAINT
 
-В операционной системе Windows через сообщение с идентификатором `WM_PAINT` операционная система уведомляет приложение о необходимости перерисовать окно, передавая его в функцию отрисовки. Это происходит при перемещении, изменении размера или открытии окна. Приложение должно быть сделано таким образом, чтобы в любой момент времени при поступлении сообщения `WM_PAINT` функция окна могла перерисовать все окно или любую его часть, заданную своими координатами. 
+В операционной системе Windows через сообщение с идентификатором `WM_PAINT` операционная система уведомляет приложение о необходимости перерисовать окно, передавая его в функцию отрисовки. Это происходит при перемещении, изменении размера или открытии окна. Приложение должно быть сделано таким образом, чтобы в любой момент времени при поступлении сообщения `WM_PAINT` функция окна могла перерисовать все окно или любую его часть, заданную своими координатами.
 
 В Avalonia нет прямого аналога `WM_PAINT`.
 
@@ -132,7 +132,7 @@ using(SKPaint paint = new SKPaint())
 {
     // 1. Цвет через предопределённые константы
     paint.Color = SKColors.Violet;
-    
+
     // 2. Или через RGBA компоненты (0-255)
     paint.Color = new SKColor(128, 0, 128, 255); // полупрозрачный фиолетовый
 
@@ -162,7 +162,7 @@ using(SKPaint paint = new SKPaint())
 
 Вместо `Graphics` в Avalonia, с подключением SkiaSharp, используется `SKCanvas`. `SKCanvas` представляет собой поверхность для отрисовки фигур, линий, изображений, текста и т.д.
 
-Отличие состоит в том, что объект `Graphics` создать напрямую нельзя, хотя и существует несколько способов получения его экземпляра, а `SKCanvas` можно. 
+Отличие состоит в том, что объект `Graphics` создать напрямую нельзя, хотя и существует несколько способов получения его экземпляра, а `SKCanvas` можно.
 
 
 == Пример использования `SKCanvas`
@@ -199,7 +199,7 @@ using (var canvas = new SKCanvas(skBitmap))
 Почему используется цепочка конвертирования: `SKImage.FromBitmap`() $arrow.r$ `Encode`() $arrow.r$ `MemoryStream` $arrow.r$ `Bitmap`()?
 
 Эта цепочка необходима, потому что `SKBitmap` и Avalonia `Bitmap` --- это разные типы, находящиеся в разных библиотеках с разными внутренними представлениями данных:
-- `SKImage.FromBitmap`(`skBitmap`) создаёт неизменяемый образ из `SKBitmap`; 
+- `SKImage.FromBitmap`(`skBitmap`) создаёт неизменяемый образ из `SKBitmap`;
 - `image.Encode`(`SKEncodedImageFormat.Png, 100`) кодирует `SKImage` в стандартный формат PNG с качеством 100% (можно выбрать другой формат изображения);
 - `data.ToArray()` преобразует `SKData` в массив байтов (`byte[]`). Это необходимо для взаимодействия с `MemoryStream`, а массив байтов --- это самый базовый формат, поддерживаемый всеми платформами;
 - `new MemoryStream(byte[])` оборачивает массив байтов в поток в памяти;
@@ -231,7 +231,7 @@ using(SKSurface sKSurface = SKSurface.Create(imageInfo))
         Bitmap bm =  new Bitmap(memoryStream);
         imageTest.Source = bm;
     }
-}   
+}
 ```
 
 Рисование также осуществляется слоями, которые перекрывают друг друга.
@@ -241,7 +241,7 @@ using(SKSurface sKSurface = SKSurface.Create(imageInfo))
 Вот как может выглядеть код на axaml:
 
 ```xaml
-<Image x:Name="imageTest" Width="500" Height="500"/> 
+<Image x:Name="imageTest" Width="500" Height="500"/>
 ```
 
 == Методы, свойства и классы SkiaSharp
@@ -277,7 +277,7 @@ using (var paint = new SKPaint())
 }
 ```
 
-*Эллипс:* 
+*Эллипс:*
 
 ```cs
 var rect = SKRect.Create(10, 10, 80, 60);
@@ -361,8 +361,8 @@ using (SKPaint textPaint = new SKPaint())
     Typeface = SKTypeface.FromFamilyName("Arial")
   };
 
-  canvas.DrawText("Hello, World!", 
-    new SKPoint(200, 200), 
+  canvas.DrawText("Hello, World!",
+    new SKPoint(200, 200),
     SKTextAlign.Left,
     font,
     textPaint);
@@ -525,11 +525,11 @@ canvas.DrawLine(50, 300, 250, 300, capPaint);
 
 *Открытие файла:*
 ```cs
-var files = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions 
-{ 
+var files = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+{
     Title = "Выберите изображение",
-    FileTypeFilter = new[] 
-    { 
+    FileTypeFilter = new[]
+    {
         new FilePickerFileType("Изображения", new[] { "png", "jpg", "jpeg", "bmp", "gif", "webp" })
     }
 });
@@ -544,12 +544,12 @@ if (files.Count > 0)
 *Сохранение файла:*
 
 ```cs
-var file = await StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions 
-{ 
+var file = await StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
+{
     Title = "Сохранить как...",
     SuggestedFileName = "result.png",
-    FileTypeChoices = new[] 
-    { 
+    FileTypeChoices = new[]
+    {
         new FilePickerFileType("PNG", new[] { "png" }),
         new FilePickerFileType("JPEG", new[] { "jpg" })
     }
@@ -582,14 +582,14 @@ XAML:
             <Button Name="SaveButton" Content="Сохранить" Click="SaveImage_Click" Margin="5"/>
             <Button Name="GrayscaleButton" Content="Ч/Б" Click="Grayscale_Click" Margin="5"/>
         </StackPanel>
-        
-        <ScrollViewer Grid.Row="1" Margin="10" 
+
+        <ScrollViewer Grid.Row="1" Margin="10"
                       HorizontalScrollBarVisibility="Auto"
                       VerticalScrollBarVisibility="Auto"
                       MinWidth="700" MinHeight="500">
             <Border BorderBrush="Gray" BorderThickness="1" Background="White">
-                <Canvas Name="ImageCanvas" Background="White" 
-                        PointerPressed="OnMouseDown" 
+                <Canvas Name="ImageCanvas" Background="White"
+                        PointerPressed="OnMouseDown"
                         PointerMoved="OnMouseMove"/>
             </Border>
         </ScrollViewer>
@@ -636,7 +636,7 @@ public partial class MainWindow : Window
             //декодирование в SkiaSharp
             using var stream = await files[0].OpenReadAsync();
             skBitmap = SKBitmap.Decode(stream);
-            
+
             if (skBitmap != null)
             {
                 avaloniaBitmap = new WriteableBitmap(
@@ -706,7 +706,7 @@ public partial class MainWindow : Window
         var point = new Point((float)position.X, (float)position.Y);
         skCanvas.DrawLine(
             new SKPoint((float)previousPoint.Value.X, (float)previousPoint.Value.Y),
-            new SKPoint((float)point.X, (float)point.Y), 
+            new SKPoint((float)point.X, (float)point.Y),
             paint);
 
         previousPoint = point;
@@ -720,8 +720,8 @@ public partial class MainWindow : Window
         using var surface = SKSurface.Create(new SKImageInfo(skBitmap.Width, skBitmap.Height, SKColorType.Bgra8888));
         surface.Canvas.DrawBitmap(skBitmap, 0, 0);
         surface.Snapshot().ReadPixels(
-            new SKImageInfo(skBitmap.Width, skBitmap.Height, SKColorType.Bgra8888), 
-            locked.Address, 
+            new SKImageInfo(skBitmap.Width, skBitmap.Height, SKColorType.Bgra8888),
+            locked.Address,
             locked.RowBytes);
         Dispatcher.UIThread.Post(() =>
         {
@@ -740,13 +740,13 @@ public partial class MainWindow : Window
 
 + Создайте функцию, отрисовывающую окружность. Центр окружности совпадает с центром изображения. Все точки вне окружности закрашиваются черным цветом. Все точки внутри окружности остаются неизменными. Радиус окружности задается пользователем.
 
-+ Создайте функцию, выводящую на изображение треугольник. Все точки вне треугольника закрашиваются синим цветом. Все точки внутри треугольника остаются неизменными. 
++ Создайте функцию, выводящую на изображение треугольник. Все точки вне треугольника закрашиваются синим цветом. Все точки внутри треугольника остаются неизменными.
 
-+ Создайте функцию, выводящую на изображение ромб. Все точки вне ромба переводятся в градации серого цвета. Все точки внутри ромба закрашиваются зеленым цветом. 
++ Создайте функцию, выводящую на изображение ромб. Все точки вне ромба переводятся в градации серого цвета. Все точки внутри ромба закрашиваются зеленым цветом.
 
 + Создайте функцию, разбивающую изображение на три равные части. В каждой оставьте значение только одного канала R, G и B.
 
-+ Разработайте функцию, заменяющую все точки синего цвета на точки красного цвета. 
++ Разработайте функцию, заменяющую все точки синего цвета на точки красного цвета.
 
 + Создайте функцию, инвертирующую  изображение в градациях серого цвета в негатив.
 

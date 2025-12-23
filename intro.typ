@@ -1,27 +1,27 @@
-#import "conf/conf.typ" : conf
+#import "conf/conf.typ": conf
 #show: conf.with(
   title: [Альтернативный путь по C\# или как пройти предмет, если вы используете линукс],
   type: "pract",
   info: (
-      author: (
-        name: [],
-        faculty: [],
-        group: "",
-        sex: ""
-      ),
-      inspector: (
-        degree: "",
-        name: ""
-      )
+    author: (
+      name: [],
+      faculty: [],
+      group: "",
+      sex: "",
+    ),
+    inspector: (
+      degree: "",
+      name: "",
+    ),
   ),
   settings: (
     title_page: (
-      enabled: true
+      enabled: true,
     ),
     contents_page: (
-      enabled: true
-    )
-  )
+      enabled: true,
+    ),
+  ),
 )
 
 = Что здесь происходит?

@@ -1564,3 +1564,11 @@ namespace MyConsoleApplication {
   }
 }
 ```
+
+#figure(
+  image(
+    "lab4_imports/images/example6.png",
+    width: 80%,
+  ),
+  caption: [Работа консольного приложения],
+) 

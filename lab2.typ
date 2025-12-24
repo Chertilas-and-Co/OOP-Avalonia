@@ -43,18 +43,18 @@ _Массив_ --- набор элементов одного и того же �
 
 ```cs
 static void Main()
+{
+  int[] myArray = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+  int i;
+  try
   {
-     int[] myArray = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-     int i;
-     try
-     {
-        for (i = 0; i <= 10; i++) Console.WriteLine(myArray[i]);
-     }
-     catch (IndexOutOfRangeException)
-     {
-        Console.WriteLine("Exception: Выход за границу диапазона");
-     }
+    for (i = 0; i <= 10; i++) Console.WriteLine(myArray[i]);
   }
+  catch (IndexOutOfRangeException)
+  {
+    Console.WriteLine("Exception: Выход за границу диапазона");
+  }
+}
 ```
 
 = Массив как параметр
@@ -65,27 +65,31 @@ static void Main()
 
 ```cs
 class Program
-   {
-      static void Print(int n, int[] a) // n – размерность массива, а – ссылка на массив
-      {
-         for (int i = 0; i < n; i++) Console.Write("{0} ", a[i]);
-         Console.WriteLine();
-      }
+{
+  static void Print(int n, int[] a) // n – размерность массива, а – ссылка на массив
+  {
+    for (int i = 0; i < n; i++) {
+      Console.Write("{0} ", a[i]);
+    } 
+    Console.WriteLine();
+  }
 
-      static void Change(int n, int[] a)
-      {
-         for (int i = 0; i < n; i++)
-            if (a[i] > 0) a[i] = 0; // изменяются элементы массива
-      }
+  static void Change(int n, int[] a)
+  {
+    for (int i = 0; i < n; i++) 
+    {
+      if (a[i] > 0) a[i] = 0; // изменяются элементы массива
+    }
+  }
 
-      static void Main()
-      {
-         int[] myArray = { 0, -1, -2, 3, 4, 5, -6, -7, 8, -9 };
-         Print(10, myArray);
-         Change(10, myArray);
-         Print(10, myArray);
-      }
-   }
+  static void Main()
+  {
+    int[] myArray = { 0, -1, -2, 3, 4, 5, -6, -7, 8, -9 };
+    Print(10, myArray);
+    Change(10, myArray);
+    Print(10, myArray);
+  }
+}
 ```
 
 #block(
@@ -106,27 +110,36 @@ class Program
 
 ```cs
 class Program
+{
+  static void Print(int[] a) // передаем только ссылку на массив
   {
-     static void Print(int[] a) // передаем только ссылку на массив
-        {
-           for (int i = 0; i < a.Length; i++) Console.Write("{0} ", a[i]);
-           Console.WriteLine();
-        }
-
-     static void Change(int[] a)
-        {
-           for (int i = 0; i < a.Length; i++)
-              if (a[i] > 0) a[i] = 0;
-        }
-
-     static void Main()
-        {
-           int[] myArray = { 0, -1, -2, 3, 4, 5, -6, -7, 8, -9 };
-           Print(myArray);
-           Change(myArray);
-           Print(myArray);
-        }
+    for (int i = 0; i < a.Length; i++)
+    {
+      Console.Write("{0} ", a[i]);
+    }
+    Console.WriteLine();
   }
+
+  static void Change(int[] a)
+  {
+    for (int i = 0; i < a.Length; i++) 
+    {
+      if (a[i] > 0) 
+      {
+        a[i] = 0;
+      } 
+    }
+   
+  }
+
+  static void Main()
+    {
+      int[] myArray = { 0, -1, -2, 3, 4, 5, -6, -7, 8, -9 };
+      Print(myArray);
+      Change(myArray);
+      Print(myArray);
+    }
+}
 ```
 
 Другие свойства и методы класса `Array` приведены в следующей таблице:
@@ -179,47 +192,49 @@ class Program
 
 ```cs
 class Program
+{
+  static void Main()
   {
-     static void Main()
-        {
-           try
-           {
-              int[] MyArray;
-              Console.Write("Введите размерность массива: ");
-              int n = int.Parse(Console.ReadLine());
-              MyArray = new int[n];
-              for (int i = 0; i < MyArray.Length; ++i)
-              {
-                 Console.Write("a[{0}]=",i);
-                 MyArray[i] = int.Parse(Console.ReadLine());
-              }
-              PrintArray("исходный массив:", MyArray);
-              Array.Sort(MyArray);
-              PrintArray("массив отсортирован по возрастанию", MyArray);
-              Array.Reverse(MyArray);
-              PrintArray("массив отсортирован по убыванию", MyArray);
-           }
-           catch (FormatException)
-           {
-              Console.WriteLine("неверный формат ввода данных");
-           }
-           catch (OverflowException)
-           {
-              Console.WriteLine("переполнение");
-           }
-           catch (OutOfMemoryException)
-           {
-              Console.WriteLine("недостаточно памяти для создания нового объекта");
-           }
-        }
-        static void PrintArray(string a, int[] mas)
-        {
-           Console.WriteLine(a);
-           for (int i = 0; i < mas.Length; i++) Console.Write("{0} ", mas[i]);
-           Console.WriteLine();
-        }
-     }
+    try
+    {
+      int[] MyArray;
+      Console.Write("Введите размерность массива: ");
+      int n = int.Parse(Console.ReadLine());
+      MyArray = new int[n];
+      for (int i = 0; i < MyArray.Length; ++i)
+      {
+        Console.Write("a[{0}] = ",i);
+        MyArray[i] = int.Parse(Console.ReadLine());
+      }
+      PrintArray("исходный массив:", MyArray);
+      Array.Sort(MyArray);
+      PrintArray("массив отсортирован по возрастанию", MyArray);
+      Array.Reverse(MyArray);
+      PrintArray("массив отсортирован по убыванию", MyArray);
+    }
+    catch (FormatException)
+    {
+      Console.WriteLine("неверный формат ввода данных");
+    }
+    catch (OverflowException)
+    {
+      Console.WriteLine("переполнение");
+    }
+    catch (OutOfMemoryException)
+    {
+      Console.WriteLine("недостаточно памяти для создания нового объекта");
+    }
   }
+  static void PrintArray(string a, int[] mas)
+  {
+    Console.WriteLine(a);
+    for (int i = 0; i < mas.Length; i++)
+    {
+      Console.Write("{0} ", mas[i]);
+    }
+    Console.WriteLine();
+  }
+}
 ```
 
 #block(
@@ -351,54 +366,60 @@ int [][] a = {new int [2], new int [3], new int [10]};
 Пример:
 ```cs
 class Program
+{
+  static void Main()
   {
-     static void Main()
-     {
-        try
+    try
+    {
+      int[][] MyArray;
+      Console.Write("Ввведите количество строк: ");
+      int n = int.Parse(Console.ReadLine());
+      MyArray = new int[n][];
+      for (int i = 0; i < MyArray.Length; i++)
+      {
+        Console.Write("введите количество элементов в {0} строке: ", i);
+        int j = int.Parse(Console.ReadLine());
+        MyArray[i] = new int[j];
+        for (j = 0; j < MyArray[i].Length; j++)
         {
-           int[][] MyArray;
-           Console.Write("Ввведите количество строк: ");
-           int n = int.Parse(Console.ReadLine());
-           MyArray = new int[n][];
-           for (int i = 0; i < MyArray.Length; i++)
-           {
-              Console.Write("введите количество элементов в {0} строке: ", i);
-              int j = int.Parse(Console.ReadLine());
-              MyArray[i] = new int[j];
-              for (j = 0; j < MyArray[i].Length; j++)
-              {
-                 Console.Write("a[{0}][{1}]= ", i, j);
-                 MyArray[i][j] = int.Parse(Console.ReadLine());
-              }
-           }
-           PrintArray("исходный массив:", MyArray);
-           for (int i = 0; i < MyArray.Length; i++) Array.Sort(MyArray[i]);
-           PrintArray("измененный массив", MyArray);
+          Console.Write("a[{0}][{1}] = ", i, j);
+          MyArray[i][j] = int.Parse(Console.ReadLine());
         }
-        catch (FormatException)
-        {
-           Console.WriteLine("неверный формат ввода данных");
-        }
-        catch (OverflowException)
-        {
-           Console.WriteLine("переполнение");
-        }
-        catch (OutOfMemoryException)
-        {
-           Console.WriteLine("недостаточно памяти для создания нового объекта");
-        }
-     }
-
-     static void PrintArray(string a, int[][] mas)
-     {
-         Console.WriteLine(a);
-         for (int i = 0; i < mas.Length; i++)
-         {
-            for (int j = 0; j < mas[i].Length; j++) Console.Write("{0} ", mas[i][j]);
-            Console.WriteLine();
-         }
-     }
+      }
+      PrintArray("исходный массив:", MyArray);
+      for (int i = 0; i < MyArray.Length; i++)
+      {
+        Array.Sort(MyArray[i]);
+      } 
+      PrintArray("измененный массив", MyArray);
+    }
+    catch (FormatException)
+    {
+      Console.WriteLine("неверный формат ввода данных");
+    }
+    catch (OverflowException)
+    {
+      Console.WriteLine("переполнение");
+    }
+    catch (OutOfMemoryException)
+    {
+      Console.WriteLine("недостаточно памяти для создания нового объекта");
+    }
   }
+
+  static void PrintArray(string a, int[][] mas)
+  {
+      Console.WriteLine(a);
+      for (int i = 0; i < mas.Length; i++)
+      {
+         for (int j = 0; j < mas[i].Length; j++) 
+         {
+           Console.Write("{0} ", mas[i][j]);
+         }
+         Console.WriteLine();
+      }
+  }
+}
 ```
 
 #block(
@@ -426,36 +447,44 @@ class Program
 
 ```cs
 static void PrintArray(string a, int [] mas)
+{
+  Console.WriteLine(a);
+  foreach (int x in mas)
   {
-     Console.WriteLine(a);
-     foreach (int x in mas) Console.Write("{0} ", x);
-     Console.WriteLine();
-  }
+    Console.Write("{0} ", x);
+  } 
+  Console.WriteLine();
+}
 ```
 
 2. для работы с двумерными массивами:
 
 ```cs
-static int Sum (int [,] mas)
+static int Sum(int [,] mas)
+{
+  int s = 0;
+  foreach (int x in mas)
   {
-     int s = 0;
-     foreach (int x in mas) s += x;
-     return s;
-  }
+    s += x;
+  } 
+  return s;
+}
 ```
 
 3. для работы со ступенчатыми массивами:
 
 ```cs
 static void PrintArray3(string a, int[][] mas)
+{
+  Console.WriteLine(a);
+  for (int i = 0; i < mas.Length; i++)
   {
-     Console.WriteLine(a);
-     for (int i = 0; i < mas.Length; i++)
-     {
-        foreach (int x in mas[i]) Console.Write("{0} ", x);
-        Console.WriteLine();
-     }
+    foreach (int x in mas[i]) {
+      Console.Write("{0} ", x);
+    } 
+    Console.WriteLine();
   }
+}
 ```
 
 = Выполнение индивидуального задания
@@ -474,59 +503,72 @@ _Выполните задание в консольном приложении_
 using System;
 namespace ConsoleApplication
 {
-   class Class
-   {
-      static int[][] Input ()
-      {
-         Console.WriteLine("введите размерность массива");
-         Console.Write("n = ");
-         int n = int.Parse(Console.ReadLine());
-         int [][]a = new int[n][];
-         for (int i = 0; i < n; ++i)
-         {
-            a[i]=new int [n];
-            for (int j = 0; j < n; ++j)
-            {
-               Console.Write("a[{0},{1}]= ", i, j);
-               a[i][j]=int.Parse(Console.ReadLine());
-            }
-         }
-         return a;
-      }
+  class Class
+  {
+    static int[][] Input ()
+    {
+       Console.WriteLine("введите размерность массива");
+       Console.Write("n = ");
+       int n = int.Parse(Console.ReadLine());
+       int [][]a = new int[n][];
+       for (int i = 0; i < n; ++i)
+       {
+          a[i] = new int [n];
+          for (int j = 0; j < n; ++j)
+          {
+             Console.Write("a[{0},{1}] = ", i, j);
+             a[i][j] = int.Parse(Console.ReadLine());
+          }
+       }
+       return a;
+    }
 
-      static void Print1(int[] a)
-      {
-         for (int i = 0; i < a.Length; ++i)
-            Console.Write("{0,5} ", a[i]);
-      }
+    static void Print1(int[] a)
+    {
+       for (int i = 0; i < a.Length; ++i)
+       {
+         Console.Write("{0,5} ", a[i]);
+       }
+    }
 
-      static void Print2(int[][] a)
-      {
-         for (int i = 0; i < a.Length; ++i,Console.WriteLine() )
-            for (int j = 0; j < a[i].Length; ++j)
-                Console.Write("{0,5} ", a[i][j]);
-      }
+    static void Print2(int[][] a)
+    {
+       for (int i = 0; i < a.Length; ++i, Console.WriteLine()) 
+       {
+          for (int j = 0; j < a[i].Length; ++j) 
+          {
+            Console.Write("{0,5} ", a[i][j]);
+          }
+       }
+    }
 
-      static int Max(int[] a)
-      {
-         int max = a[0];
-         for (int i = 1; i < a.Length; ++i)
-            if (a[i] > max) {max = a[i];}
-         return max;
-      }
+    static int Max(int[] a)
+    {
+       int max = a[0];
+       for (int i = 1; i < a.Length; ++i) 
+       {
+          if (a[i] > max) 
+          {
+            max = a[i];
+          }
+       }
+       return max;
+    }
 
-      static void Main()
-      {
-         int[][] myArray = Input();
-         Console.WriteLine("Исходный массив:");
-         Print2(myArray);
-         int[]rez = new int [myArray.Length];
-         for (int i = 0; i < myArray.Length; ++i)
-            rez[i] = Max(myArray[i]);
-         Console.WriteLine("Новый массив:");
-         Print1(rez);
-      }
-   }
+    static void Main()
+    {
+       int[][] myArray = Input();
+       Console.WriteLine("Исходный массив:");
+       Print2(myArray);
+       int[]rez = new int [myArray.Length];
+       for (int i = 0; i < myArray.Length; ++i) 
+       {
+          rez[i] = Max(myArray[i]);
+       }
+       Console.WriteLine("Новый массив:");
+       Print1(rez);
+    }
+  }
 }
 ```
 

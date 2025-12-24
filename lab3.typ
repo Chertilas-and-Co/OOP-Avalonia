@@ -49,7 +49,8 @@
 Классы объявляются с помощью ключевого слова `class`:
 
 ```cs
-[уровень доступа] class <имя класса> {
+[уровень доступа] class <имя класса> 
+{
   1. Описание полей
   2. Описание методов
   3. Описание прочих членов класса
@@ -95,9 +96,11 @@
 *Решение*.
 
 ```cs
-namespace MyConsoleApplication {
+namespace MyConsoleApplication 
+{
   // Объявление класса
-  public class Rectangle {
+  public class Rectangle
+  {
     // Члены класса:
     // Поля
     public int SideA;
@@ -105,10 +108,12 @@ namespace MyConsoleApplication {
     public string Name;
 
     // Методы
-    public int GetPerimeter() {
+    public int GetPerimeter()
+    {
       return (SideA + SideB) * 2;
     }
-    public void SetName(string newName) {
+    public void SetName(string newName) 
+    {
       Name = newName;
       return true;
     }
@@ -134,10 +139,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyConsoleApplication {
+namespace MyConsoleApplication
+{
 
   // Объявление класса
-  public class Rectangle {
+  public class Rectangle
+  {
     // Члены класса:
     // Поля
     public int SideA;
@@ -145,17 +152,21 @@ namespace MyConsoleApplication {
     public string Name;
 
     // Методы
-    public int GetPerimeter() {
+    public int GetPerimeter() 
+    {
       return (SideA + SideB) * 2;
     }
-    public void SetName(string newName) {
+    public void SetName(string newName)
+    {
       Name = newName;
       return true;
     }
   }
 
-  class Program {
-    static void Main(string[] args) {
+  class Program 
+  {
+    static void Main()
+    {
       Console.WriteLine("Работа с первым объектом");
 
       // Создание первого объекта на основе класса Rectangle
@@ -246,10 +257,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyConsoleApplication {
+namespace MyConsoleApplication 
+{
 
   // Объявление класса
-  public class Rectangle {
+  public class Rectangle 
+  {
     // Члены класса:
     // Поля
     public int SideA;
@@ -258,33 +271,40 @@ namespace MyConsoleApplication {
 
     // Конструкторы
     // Конструктор по умолчанию
-    public Rectangle() {
+    public Rectangle() 
+    {
       SideA = 1;
       SideB = 1;
       Name = "Прямоугольник 1х1";
     }
 
     // Конструктор с аргументами
-    public Rectangle(string name, int sideA, int sideB) {
+    public Rectangle(string name, int sideA, int sideB) 
+    {
       SideA = sideA;
       SideB = sideB;
       Name = name;
     }
 
     // Методы
-    public int GetPerimeter() {
+    public int GetPerimeter() 
+    {
       return (SideA + SideB) * 2;
     }
-    public void SetName(string newName) {
+    public void SetName(string newName) 
+    {
       Name = newName;
     }
-    public string GetName() {
+    public string GetName() 
+    {
       return Name;
     }
   }
 
-  class Program {
-    static void Main(string[] args) {
+  class Program 
+  {
+    static void Main()
+    {
       Console.WriteLine("Работа с первым объектом");
 
       // Создание первого объекта на основе класса Rectangle (большой прямоугольник со сторонами 5 и 10)
@@ -345,11 +365,13 @@ public class Son: Dad {}
 *Пример*:
 
 ```cs
-public class Dad {
+public class Dad 
+{
   int a;
   public Dad(int s);
 }
-public class Son: Dad {
+public class Son: Dad 
+{
   public Son(int k): base(k) {}
 }
 ```
@@ -363,11 +385,13 @@ public class Son: Dad {
 *Пример*:
 
 ```cs
-public class Dad {
+public class Dad 
+{
   int a;
   public Dad(int s);
 }
-public class Son: Dad {
+public class Son: Dad 
+{
   public Son(int k): base(k) {}
   public Son(): this(10) {}
 }
@@ -379,7 +403,8 @@ _Копирующий конструктор_ (copy constructor) создает
 Подобный конструктор всего лишь копирует элементы исходного объекта во вновь создаваемый:
 
 ```cs
-public Time(Time existingTimeObject) {
+public Time(Time existingTimeObject)
+{
   Year = existingTimeObject.Year;
   Montn = existingTimeObject.Month;
   Date = existingTimeObject.Date;
@@ -406,7 +431,8 @@ _Ключевое слово `this`_ является ссылкой на тек
 Например, в следующем коде:
 
 ```cs
-public void FirstMetnod(OtherClass otherQbiect) {
+public void FirstMetnod(OtherClass otherQbiect) 
+{
   otherQbject.SecondMethod(this);
 }
 ```
@@ -438,7 +464,8 @@ _Деструктор_ --- метод, используемый для унич�
 // ...
 
 // Дестркутор
-~Rectangle() {
+~Rectangle() 
+{
   System.Diagnostics.Trace.WriteLine(this.GetName() + " уничтожен");
 }
 
@@ -461,12 +488,15 @@ public static int I;
 Пример параметризованного класса:
 
 ```cs
-public class Class1<T> {
+public class Class1<T> 
+{
   private T[] internalArray = new T[20];
 }
 
-public class MyConsoleApplication {
-  static void Main(string[] args) {
+public class MyConsoleApplication
+{
+  static void Main()
+  {
     Class1<string> object1 = new Class1<string>();
     Class1<int> object2 = new Class1<int>();
   }
@@ -537,10 +567,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyConsoleApplication {
+namespace MyConsoleApplication
+{
 
   // Объявление класса
-  public class Rectangle {
+  public class Rectangle
+  {
     // Члены класса:
     // Поля.
     private int SideA;
@@ -548,7 +580,8 @@ namespace MyConsoleApplication {
     private string Name;
 
     // Конструктор с аргументами
-    public Rectangle(string name, int sideA, int sideB) {
+    public Rectangle(string name, int sideA, int sideB)
+    {
       SideA = sideA;
       SideB = sideB;
       Name = name;
@@ -556,25 +589,32 @@ namespace MyConsoleApplication {
 
     // Свойства
     // Только для чтения
-    public int Perimeter {
-      get {
+    public int Perimeter
+    {
+      get 
+      {
         return (SideA + SideB) * 2;
       }
     }
 
     // Для чтения и для записи
-    public string Name {
-      set {
+    public string Name 
+    {
+      set 
+      {
         Name = value;
       }
-      get {
+      get
+      {
         return Name;
       }
     }
   }
 
-  class Program {
-    static void Main(string[] args) {
+  class Program 
+  {
+    static void Main() 
+    {
       // Создание объекта на основе класса Rectangle: "Большой прямоугольник со сторонами" 5 и 10
       Rectangle myRectangle = new Rectangle("Большой прямоугольник", 5, 10);
 
@@ -598,22 +638,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MyConsoleApplication {
-  class MyClass {
+namespace MyConsoleApplication
+{
+  class MyClass 
+  {
     public int x = 10, y = 5, z = 6;
   }
 
-  class ClassA : MyClass {
+  class ClassA : MyClass 
+  {
     // Скрываем члены класса MyClass
     public new int x = 12, y = -2, z = -5;
   }
 
-  class ClassB : MyClass {
+  class ClassB : MyClass 
+  {
     public int x;
   }
 
-  class Program {
-    static void Main() {
+  class Program 
+  {
+    static void Main() 
+    {
       ClassA obj1 = new ClassA();
       ClassB obj2 = new ClassB();
 
@@ -649,15 +695,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MyConsoleApplication {
-  class MyClass {
+namespace MyConsoleApplication 
+{
+  class MyClass
+  {
     public int x;
   }
 
-  class ClassA : MyClass {
+  class ClassA : MyClass 
+  {
     new int x = 10;
 
-    public void someMethod(int i1, int i2) {
+    public void someMethod(int i1, int i2)
+    {
       // Координата x из базового класса MyClass
       base.x = i1;
       Console.WriteLine("x (в базовом классе) = " + base.x);
@@ -668,8 +718,10 @@ namespace MyConsoleApplication {
       }
     }
 
-  class Program {
-    static void Main() {
+  class Program 
+  {
+    static void Main() 
+    {
        ClassA obj1 = new ClassA();
        obj1.someMethod(1, 25);
        Console.ReadLine();
@@ -694,11 +746,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MyConsoleApplication {
-  class ClassA {
+namespace MyConsoleApplication 
+{
+  class ClassA 
+  {
     public int a;
 
-    public ClassA(int i) {
+    public ClassA(int i)
+    {
       a = i;
     }
   }
@@ -712,16 +767,20 @@ namespace MyConsoleApplication {
     }
   }
 
-  class ClassC {
+  class ClassC 
+  {
     public int a;
 
-    public ClassC(int i) {
+    public ClassC(int i) 
+    {
       a = i;
     }
   }
 
-  class Program {
-    static void Main() {
+  class Program
+  {
+    static void Main()
+    {
       ClassA objA1 = new ClassA(10);
       ClassA objA2 = new ClassA(5);
 
